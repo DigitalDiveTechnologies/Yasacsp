@@ -213,6 +213,29 @@ a:focus-visible,
     background: radial-gradient(ellipse at center, rgba(255, 255, 255, 0.9), transparent 62%);
     filter: blur(14px);
   }
+
+  .instagram-carousel-mask {
+    mask-image: linear-gradient(90deg, transparent, black 6%, black 94%, transparent);
+  }
+
+  .instagram-carousel-track {
+    animation: instagram-carousel 55s linear infinite;
+    will-change: transform;
+  }
+
+  .instagram-carousel-track:hover {
+    animation-play-state: paused;
+  }
+}
+
+@keyframes instagram-carousel {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(-50%);
+  }
 }
 
 @media (max-width: 767px) {
@@ -231,5 +254,19 @@ a:focus-visible,
   *::before,
   *::after {
     scroll-behavior: auto !important;
+  }
+
+  .instagram-carousel-track {
+    animation: none;
+    flex-wrap: wrap;
+    width: 100%;
+    justify-content: center;
+    padding-inline: 1.5rem;
+    gap: 1rem;
+  }
+
+  .instagram-carousel-mask {
+    mask-image: none;
+    overflow: visible;
   }
 }

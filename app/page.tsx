@@ -1,4 +1,5 @@
 import { Footer } from "@/components/Footer";
+import { MediaGallery } from "@/components/MediaGallery";
 import {
   CapabilityCards,
   CompanyIntro,
@@ -21,6 +22,7 @@ export default function Home() {
         <CapabilityCards />
         <GlobalPresence />
       </main>
+      <MediaGallery />
       <Footer />
     </>
   );
