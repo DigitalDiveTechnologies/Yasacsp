@@ -299,7 +299,7 @@ export function Hero() {
           </div>
         </motion.div>
 
-        <motion.div className="absolute inset-x-0 bottom-[12vh] z-10 px-6 text-section" style={reduceMotion ? undefined : { opacity: contentOpacity }}>
+        <motion.div className="absolute inset-x-0 bottom-44 z-10 px-6 text-section lg:bottom-48" style={reduceMotion ? undefined : { opacity: contentOpacity }}>
           <div className="container grid gap-8 lg:grid-cols-[1fr_22rem] lg:items-end">
             <div>
               <p className="label-text mb-5 text-accent">{t.hero.eyebrow}</p>
@@ -411,7 +411,6 @@ export function CompanyIntro() {
               <span className="absolute bottom-8 left-1/2 -translate-x-1/2 -rotate-90 whitespace-nowrap font-mono text-[0.62rem] uppercase tracking-[0.2em] text-white">
                 {label}
               </span>
-              <span className="absolute bottom-3 right-3 font-mono text-[0.58rem] text-white/70">0{index + 1}</span>
 
               <AnimatePresence>
                 {isActive ? (
@@ -444,17 +443,19 @@ function TrustStat({
   start,
   reduceMotion,
 }: {
-  stat: { value: number; suffix: string; label: string };
+  stat: { value: number | string; suffix: string; label: string };
   start: boolean;
   reduceMotion: boolean;
 }) {
-  const value = useCountUp(stat.value, start, reduceMotion);
+  const isNumeric = typeof stat.value === "number";
+  const numericValue: number = typeof stat.value === "number" ? stat.value : 0;
+  const value = useCountUp(numericValue, start, reduceMotion);
 
   return (
     <div className="border-b border-primary/12 pb-6">
-      <div className="font-display text-5xl font-semibold tracking-[-0.05em] text-primary md:text-6xl">
-        {value.toLocaleString()}
-        <span className="text-accent">{stat.suffix}</span>
+      <div className="font-display text-5xl font-semibold leading-none tracking-[-0.05em] text-primary md:text-6xl">
+        {isNumeric ? value.toLocaleString() : stat.value}
+        {stat.suffix ? <span className="text-accent">{stat.suffix}</span> : null}
       </div>
       <p className="label-text mt-3 text-charcoal/62">{stat.label}</p>
     </div>
@@ -605,9 +606,6 @@ export function Services() {
                         index % 2 === 0 ? "bottom-[calc(50%+2.25rem)]" : "top-[calc(50%+2.25rem)]"
                       } ${isActive ? "text-primary" : "text-charcoal/52 hover:text-primary"}`}
                     >
-                      <span className="block font-mono text-[0.62rem] uppercase tracking-[0.16em] text-accent">
-                        {String(index + 1).padStart(2, "0")}
-                      </span>
                       <span className="mt-1 block font-display text-xl font-semibold leading-tight tracking-[-0.025em]">
                         {service.title}
                       </span>
@@ -631,7 +629,6 @@ export function Services() {
                       : "border-primary/12 bg-section text-charcoal/68"
                   }`}
                 >
-                  <span className="font-mono text-[0.65rem] uppercase tracking-[0.16em]">{String(index + 1).padStart(2, "0")}</span>
                   <span className="block max-w-36 font-display text-lg font-semibold leading-tight">{service.title}</span>
                 </button>
               ))}
@@ -660,9 +657,7 @@ export function Services() {
                     </motion.div>
                     <div className="relative flex h-full flex-col justify-between">
                       <div>
-                        <p className="label-text text-accent">
-                          {t.services.checkpoint} {String(activeIndex + 1).padStart(2, "0")} / {serviceList.length}
-                        </p>
+                        <p className="label-text text-accent">{t.services.activeService}</p>
                         <div className="mt-8 aspect-square w-44 text-section md:w-64">
                           <ServiceVisual type={activeService.visual} />
                         </div>
@@ -800,28 +795,113 @@ export function Insights() {
 }
 
 export function SuccessBanner() {
-  const { t } = useLanguage();
+  const processSteps = [
+    {
+      step: "Consultation Stage",
+      title: "Consultation",
+      points: [
+        "Discuss your goals, preferred jurisdiction, and business activity.",
+        "Get expert guidance on the best mainland, free zone, or offshore route.",
+      ],
+    },
+    {
+      step: "Documentation Stage",
+      title: "Documentation",
+      points: [
+        "Prepare passport copies, business plan, application forms, and approvals.",
+        "Complete the required licensing and registration paperwork.",
+      ],
+    },
+    {
+      step: "Registration Stage",
+      title: "Company Registration",
+      points: [
+        "Submit documents to the relevant authority or free zone.",
+        "Receive trade license support, visa guidance, banking, and compliance assistance.",
+      ],
+    },
+  ];
+
+  const benefits = [
+    {
+      title: "One-stop setup execution",
+      body: "One partner for company registration, licensing, visas, banking, and compliance.",
+      image: "/images/capability-incorporation.jpg",
+      accent: "from-brand-ink/92 to-accent/86",
+    },
+    {
+      title: "Transparent guidance",
+      body: "Clear steps, requirements, timelines, and options based on your activity.",
+      image: "/images/capability-partnership.jpg",
+      accent: "from-brand-ink/92 to-brand-teal/84",
+    },
+    {
+      title: "Compliance-first handling",
+      body: "Correct documentation, sequencing, and structured submissions from day one.",
+      image: "/images/news-compliance.jpg",
+      accent: "from-brand-ink/92 to-amber-700/82",
+    },
+    {
+      title: "Post-setup support",
+      body: "Ongoing assistance for renewals, amendments, visas, banking, and compliance needs.",
+      image: "/images/news-business-growth.jpg",
+      accent: "from-brand-ink/92 to-indigo-900/82",
+    },
+  ];
 
   return (
-    <section className="relative overflow-hidden bg-section px-6 py-24 text-center text-primary md:py-32">
-      <div className="pointer-events-none absolute inset-x-0 bottom-0 h-[26rem]">
-        <Image
-          src="/images/capability-incorporation.jpg"
-          alt=""
-          fill
-          sizes="100vw"
-          className="object-cover object-center opacity-28"
-        />
-        <div className="absolute inset-0 bg-[linear-gradient(180deg,var(--color-section)_0%,rgba(255,255,255,0.86)_32%,rgba(255,255,255,0.38)_62%,var(--color-section)_100%)]" />
-      </div>
-      <div className="container relative">
-        <h2 className="mx-auto max-w-2xl font-display text-6xl font-bold uppercase leading-[0.78] tracking-[-0.07em] text-primary/10 md:text-8xl">
-          {t.success.title}
-        </h2>
-        <p className="mx-auto mt-10 max-w-3xl text-base leading-8 text-charcoal/70">{t.success.body}</p>
-        <a href={company.phoneHref} className="mt-8 inline-flex items-center gap-3 rounded-full bg-accent px-6 py-3 font-mono text-xs uppercase tracking-[0.16em] text-section transition hover:bg-brand-ink focus-ring">
-          {t.success.cta} <span className="h-px w-8 bg-section" />
-        </a>
+    <section className="bg-section px-6 py-24 text-primary md:py-32">
+      <div className="container">
+        <div className="mb-12 grid gap-6 lg:grid-cols-[0.8fr_1.2fr] lg:items-end">
+          <div>
+            <p className="label-text mb-3 text-accent">Company Formation</p>
+            <h2 className="font-display text-5xl font-semibold leading-[0.95] tracking-[-0.055em] md:text-7xl">
+              Our Company Formation Process
+            </h2>
+          </div>
+          <p className="max-w-3xl text-base leading-8 text-charcoal/70 lg:justify-self-end">
+            From initial consultation to license issuance, YASA keeps every step clear, documented, and coordinated for your UAE business setup.
+          </p>
+        </div>
+
+        <div className="grid gap-5 lg:grid-cols-3">
+          {processSteps.map((item) => (
+            <article key={item.step} className="border border-primary/12 bg-surface p-7 shadow-soft">
+              <span className="inline-flex rounded-full border border-primary/18 px-4 py-1 font-mono text-[0.68rem] uppercase tracking-[0.14em] text-primary/72">
+                {item.step}
+              </span>
+              <h3 className="mt-5 font-display text-3xl font-semibold tracking-[-0.035em]">{item.title}</h3>
+              <div className="mt-6 grid gap-4">
+                {item.points.map((point) => (
+                  <p key={point} className="flex gap-3 text-sm leading-7 text-charcoal/72">
+                    <span className="mt-2 h-2 w-2 shrink-0 rounded-sm bg-accent" />
+                    <span>{point}</span>
+                  </p>
+                ))}
+              </div>
+            </article>
+          ))}
+        </div>
+
+        <div className="mt-16 grid gap-5 md:grid-cols-2">
+          {benefits.map((item) => (
+            <article key={item.title} className="grid min-h-44 overflow-hidden border border-primary/10 bg-primary text-section shadow-soft sm:grid-cols-[0.9fr_1.1fr]">
+              <div className="relative min-h-44">
+                <Image
+                  src={item.image}
+                  alt=""
+                  fill
+                  sizes="(min-width: 768px) 22vw, 100vw"
+                  className="object-cover"
+                />
+              </div>
+              <div className={`bg-gradient-to-br ${item.accent} p-7 text-left`}>
+                <h3 className="font-display text-2xl font-semibold tracking-[-0.03em]">{item.title}</h3>
+                <p className="mt-3 text-sm leading-7 text-section/82">{item.body}</p>
+              </div>
+            </article>
+          ))}
+        </div>
       </div>
     </section>
   );
