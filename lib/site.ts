@@ -114,3 +114,18 @@ export const socialLinks = [
     href: "https://www.instagram.com/yasa_corporate_service_provide?igsh=ZGphcGZlczl4bWdq",
   },
 ];
+
+export const partnerLogos = [
+  { id: "meydan", name: "Meydan", suffix: "Free Zone" },
+  { id: "dmcc", name: "DMCC", suffix: "Free Zone" },
+  { id: "ifza", name: "IFZA", suffix: "Free Zone" },
+  { id: "rakez", name: "RAKEZ", suffix: "Free Zone" },
+  { id: "difc", name: "DIFC", suffix: "Financial Centre" },
+  { id: "jafza", name: "JAFZA", suffix: "Free Zone" },
+  { id: "ded", name: "DED", suffix: "Dubai Mainland" },
+  { id: "adgm", name: "ADGM", suffix: "Abu Dhabi" },
+  { id: "saif", name: "SAIF Zone", suffix: "Sharjah" },
+  { id: "dafza", name: "DAFZA", suffix: "Free Zone" },
+  { id: "enbd", name: "Emirates NBD", suffix: "Banking" },
+  { id: "adcb", name: "ADCB", suffix: "Banking" },
+] as const;

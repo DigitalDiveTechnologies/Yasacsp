@@ -55,8 +55,12 @@ export const translations = {
       body: "YASA exists to attract international investors to Dubai, support contribution to its economic prosperity, and simplify the benefits of business-friendly government procedures across the UAE.",
       cta: "Start a File",
     },
+    logoSlider: {
+      eyebrow: "Trusted Authorities & Partners",
+      ariaLabel: "Partner and authority logos",
+    },
     services: {
-      eyebrow: "Services Timeline",
+      eyebrow: "Our Services",
       title: "Services that move with your file.",
       body: "Follow the active checkpoint across YASA's core business setup, residency, banking, and compliance services.",
       activeService: "Active Service",
@@ -276,8 +280,12 @@ export const translations = {
       body: "YASA existe pour attirer les investisseurs internationaux à Dubaï, soutenir sa prospérité économique et simplifier les procédures gouvernementales favorables aux entreprises aux ÉAU.",
       cta: "Démarrer un dossier",
     },
+    logoSlider: {
+      eyebrow: "Autorités et partenaires de confiance",
+      ariaLabel: "Logos des partenaires et autorités",
+    },
     services: {
-      eyebrow: "Chronologie des services",
+      eyebrow: "Nos services",
       title: "Des services qui avancent avec votre dossier.",
       body: "Suivez le point de contrôle actif parmi les services essentiels de YASA : création, résidence, banque et conformité.",
       activeService: "Service actif",

@@ -1,4 +1,5 @@
 import { Footer } from "@/components/Footer";
+import { LogoSlider } from "@/components/LogoSlider";
 import { MediaGallery } from "@/components/MediaGallery";
 import { PartnershipSpotlight } from "@/components/PartnershipSpotlight";
 import {
@@ -17,6 +18,7 @@ export default function Home() {
       <main>
         <Hero />
         <CompanyIntro />
+        <LogoSlider />
         <SuccessBanner />
         <Services />
         <Insights />

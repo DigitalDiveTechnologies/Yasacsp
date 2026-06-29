@@ -226,9 +226,32 @@ a:focus-visible,
   .instagram-carousel-track:hover {
     animation-play-state: paused;
   }
+
+  .logo-slider-mask {
+    mask-image: linear-gradient(90deg, transparent, black 5%, black 95%, transparent);
+  }
+
+  .logo-slider-track {
+    animation: logo-slider 42s linear infinite;
+    will-change: transform;
+  }
+
+  .logo-slider-track:hover {
+    animation-play-state: paused;
+  }
 }
 
 @keyframes instagram-carousel {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes logo-slider {
   from {
     transform: translateX(0);
   }
@@ -266,6 +289,20 @@ a:focus-visible,
   }
 
   .instagram-carousel-mask {
+    mask-image: none;
+    overflow: visible;
+  }
+
+  .logo-slider-track {
+    animation: none;
+    flex-wrap: wrap;
+    width: 100%;
+    justify-content: center;
+    padding-inline: 1.5rem;
+    gap: 0.75rem;
+  }
+
+  .logo-slider-mask {
     mask-image: none;
     overflow: visible;
   }

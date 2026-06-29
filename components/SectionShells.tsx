@@ -546,7 +546,6 @@ export function Services() {
   const activeService = serviceList[activeIndex] ?? serviceList[0];
   const sectionRef = useRef<HTMLElement | null>(null);
   const isInView = useInView(sectionRef, { margin: "-20% 0px -20% 0px" });
-  const progress = serviceList.length > 1 ? (activeIndex / (serviceList.length - 1)) * 100 : 0;
 
   useEffect(() => {
     if (!isInView || reduceMotion) return;
@@ -557,157 +556,95 @@ export function Services() {
   }, [isInView, reduceMotion, serviceList.length]);
 
   return (
-    <section ref={sectionRef} id="services" className="relative overflow-hidden bg-section px-6 py-28 text-primary md:py-40">
-      <div className="pointer-events-none absolute inset-x-0 top-20 h-96 bg-[radial-gradient(circle_at_50%_40%,rgba(26,107,124,0.12),transparent_62%)]" />
+    <section ref={sectionRef} id="services" className="border-t border-primary/12 bg-section px-6 py-20 text-primary md:py-24">
       <div className="container">
-        <div className="mx-auto max-w-5xl text-center">
-          <p className="label-text mb-3 text-accent">{t.services.eyebrow}</p>
-          <h2 className="font-display text-6xl font-semibold leading-[0.9] tracking-[-0.06em] md:text-8xl">
-            {t.services.title}
-          </h2>
-          <p className="mx-auto mt-7 max-w-3xl text-xl leading-9 text-charcoal/72">{t.services.body}</p>
+        <div className="mb-10 grid gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,26rem)] lg:items-end">
+          <div>
+            <p className="label-text mb-3 text-accent">{t.services.eyebrow}</p>
+            <h2 className="font-display font-semibold leading-[0.95] tracking-[-0.055em]">{t.services.title}</h2>
+          </div>
+          <p className="text-base leading-7 text-charcoal/72">{t.services.body}</p>
         </div>
 
-        <div className="relative mt-20 overflow-hidden border border-primary/12 bg-surface px-4 py-10 shadow-[0_30px_90px_rgba(17,17,17,0.09)] md:px-10 md:py-16">
-          <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(90deg,rgba(17,17,17,0.035)_1px,transparent_1px),linear-gradient(180deg,rgba(17,17,17,0.025)_1px,transparent_1px)] bg-[size:54px_54px]" />
-          <div className="relative mx-auto hidden max-w-7xl py-28 md:block">
-            <div className="absolute left-8 right-8 top-1/2 h-px -translate-y-1/2 bg-primary/14" />
-            <motion.div
-              className="absolute left-8 top-1/2 h-[2px] -translate-y-1/2 bg-accent"
-              animate={{ width: `calc((100% - 4rem) * ${progress / 100})` }}
-              transition={{ duration: reduceMotion ? 0 : 0.45, ease: "easeOut" }}
-            />
-            <div className="relative grid" style={{ gridTemplateColumns: `repeat(${serviceList.length}, minmax(0, 1fr))` }}>
-              {serviceList.map((service, index) => {
-                const isActive = index === activeIndex;
-                const isPast = index < activeIndex;
+        <div className="grid gap-6 lg:grid-cols-[minmax(0,16rem)_1fr] lg:gap-8">
+          <nav className="flex gap-2 overflow-x-auto pb-1 lg:block lg:overflow-visible lg:pb-0" aria-label="Services">
+            {serviceList.map((service, index) => {
+              const isActive = index === activeIndex;
 
-                return (
-                  <button
-                    key={service.href}
-                    type="button"
-                    onClick={() => setActiveIndex(index)}
-                    className="relative h-12 focus-ring"
-                    aria-label={`Show ${service.title}`}
-                  >
-                    <span
-                      className={`absolute left-1/2 top-1/2 z-10 grid h-7 w-7 -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full border transition ${
-                        isActive
-                          ? "border-accent bg-accent text-section shadow-[0_0_0_12px_rgba(26,107,124,0.14)]"
-                          : isPast
-                            ? "border-accent bg-section text-accent"
-                            : "border-primary/18 bg-section text-primary/35"
-                      }`}
-                    >
-                      <span className="h-2 w-2 rounded-full bg-current" />
-                    </span>
-                    <span
-                      className={`absolute left-1/2 w-44 -translate-x-1/2 text-center transition ${
-                        index % 2 === 0 ? "bottom-[calc(50%+2.25rem)]" : "top-[calc(50%+2.25rem)]"
-                      } ${isActive ? "text-primary" : "text-charcoal/52 hover:text-primary"}`}
-                    >
-                      <span className="mt-1 block font-display text-xl font-semibold leading-tight tracking-[-0.025em]">
-                        {service.title}
-                      </span>
-                    </span>
-                  </button>
-                );
-              })}
-            </div>
-          </div>
-
-          <div className="md:hidden">
-            <div className="flex gap-3 overflow-x-auto pb-3">
-              {serviceList.map((service, index) => (
+              return (
                 <button
                   key={service.href}
                   type="button"
                   onClick={() => setActiveIndex(index)}
-                  className={`shrink-0 border px-4 py-3 text-left transition focus-ring ${
-                    index === activeIndex
-                      ? "border-accent bg-accent text-section"
-                      : "border-primary/12 bg-section text-charcoal/68"
+                  aria-current={isActive ? "true" : undefined}
+                  className={`shrink-0 border px-3 py-2.5 text-left transition focus-ring lg:mb-1.5 lg:flex lg:w-full lg:items-start lg:gap-3 lg:border-0 lg:border-l-2 lg:px-0 lg:py-3 lg:pl-4 ${
+                    isActive
+                      ? "border-accent bg-accent text-section lg:border-accent lg:bg-transparent lg:text-primary"
+                      : "border-primary/12 bg-surface text-charcoal/68 lg:border-transparent lg:bg-transparent lg:hover:border-primary/18 lg:hover:text-primary"
                   }`}
                 >
-                  <span className="block max-w-36 font-display text-lg font-semibold leading-tight">{service.title}</span>
+                  <span className={`font-mono text-[0.6rem] uppercase tracking-[0.14em] ${isActive ? "lg:text-accent" : "text-accent"}`}>
+                    {String(index + 1).padStart(2, "0")}
+                  </span>
+                  <span className="mt-0.5 block max-w-[9rem] font-display text-sm font-semibold leading-snug lg:mt-0 lg:max-w-none lg:text-[0.95rem]">
+                    {service.title}
+                  </span>
                 </button>
-              ))}
-            </div>
-          </div>
+              );
+            })}
+          </nav>
 
-          <div className="relative mx-auto mt-10 max-w-6xl md:mt-6">
-            <AnimatePresence mode="wait">
-              <motion.article
-                key={activeService.href}
-                className="relative overflow-hidden border border-primary/12 bg-section shadow-[0_28px_80px_rgba(17,17,17,0.12)]"
-                initial={reduceMotion ? false : { opacity: 0, y: 22, scale: 0.985 }}
-                animate={{ opacity: 1, y: 0, scale: 1 }}
-                exit={reduceMotion ? undefined : { opacity: 0, y: -18, scale: 0.985 }}
-                transition={{ duration: 0.42, ease: "easeOut" }}
-              >
-                <div className="grid min-h-[36rem] lg:grid-cols-[0.88fr_1.12fr]">
-                  <div className="relative overflow-hidden bg-brand-ink p-8 text-section md:p-12">
-                    <div className="absolute inset-0 bg-[radial-gradient(circle_at_35%_28%,rgba(26,107,124,0.34),transparent_38%),linear-gradient(135deg,rgba(255,255,255,0.08),transparent_45%)]" />
-                    <motion.div
-                      className="absolute -bottom-20 -right-20 h-80 w-80 text-section/8 md:h-[30rem] md:w-[30rem]"
-                      animate={reduceMotion ? undefined : { rotate: [0, 5, 0], scale: [1, 1.04, 1] }}
-                      transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
-                    >
-                      <ServiceVisual type={activeService.visual} />
-                    </motion.div>
-                    <div className="relative flex h-full flex-col justify-between">
-                      <div>
-                        <p className="label-text text-accent">{t.services.activeService}</p>
-                        <div className="mt-8 aspect-square w-44 text-section md:w-64">
-                          <ServiceVisual type={activeService.visual} />
-                        </div>
-                      </div>
-                      <div className="mt-10 grid grid-cols-2 gap-3">
-                        <div className="border border-section/14 p-4">
-                          <p className="font-mono text-[0.62rem] uppercase tracking-[0.16em] text-section/46">{t.services.mode}</p>
-                          <p className="mt-2 font-display text-2xl font-semibold">{t.services.modeValue}</p>
-                        </div>
-                        <div className="border border-section/14 p-4">
-                          <p className="font-mono text-[0.62rem] uppercase tracking-[0.16em] text-section/46">{t.services.office}</p>
-                          <p className="mt-2 font-display text-2xl font-semibold">{t.services.officeValue}</p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="relative p-8 md:p-12 lg:p-16">
-                    <div className="absolute right-8 top-8 hidden h-24 w-24 border-r border-t border-accent/40 md:block" />
-                    <p className="label-text mb-5 text-accent">{t.services.activeService}</p>
-                    <h3 className="max-w-4xl font-display text-6xl font-semibold leading-none tracking-[-0.06em] md:text-8xl">
-                      {activeService.title}
-                    </h3>
-                    <div className="my-9 h-px w-36 bg-accent" />
-                    <p className="max-w-3xl text-xl leading-9 text-charcoal/74">{activeService.description}</p>
-
-                    <div className="mt-10 grid gap-4 md:grid-cols-3">
-                      {[
-                        [t.services.scope, t.services.scopeValue],
-                        [t.services.process, t.services.processValue],
-                        [t.services.outcome, t.services.outcomeValue],
-                      ].map(([label, value]) => (
-                        <div key={label} className="border border-primary/10 bg-surface p-5">
-                          <p className="font-mono text-[0.62rem] uppercase tracking-[0.16em] text-accent">{label}</p>
-                          <p className="mt-3 font-display text-2xl font-semibold tracking-[-0.035em] text-primary">{value}</p>
-                        </div>
-                      ))}
-                    </div>
-
-                    <a
-                      href={activeService.href}
-                      className="mt-10 inline-flex items-center gap-3 rounded-full border border-primary/14 px-6 py-3 font-mono text-xs uppercase tracking-[0.16em] text-primary transition hover:border-accent hover:bg-accent hover:text-section focus-ring"
-                    >
-                      {t.services.viewService} <span className="h-px w-8 bg-current" />
-                    </a>
-                  </div>
+          <AnimatePresence mode="wait">
+            <motion.article
+              key={activeService.href}
+              className="border border-primary/12 bg-surface p-6 shadow-soft md:p-8"
+              initial={reduceMotion ? false : { opacity: 0, x: 16 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={reduceMotion ? undefined : { opacity: 0, x: -12 }}
+              transition={{ duration: 0.3, ease: "easeOut" }}
+            >
+              <div className="flex items-start gap-4 md:gap-5">
+                <div className="h-14 w-14 shrink-0 text-accent md:h-16 md:w-16">
+                  <ServiceVisual type={activeService.visual} />
                 </div>
-              </motion.article>
-            </AnimatePresence>
-          </div>
+                <div className="min-w-0">
+                  <p className="label-text text-accent">
+                    {t.services.activeService} · {t.services.checkpoint} {String(activeIndex + 1).padStart(2, "0")}
+                  </p>
+                  <h3 className="mt-2 font-display text-2xl font-semibold leading-tight tracking-[-0.035em] md:text-3xl">
+                    {activeService.title}
+                  </h3>
+                </div>
+              </div>
+
+              <p className="mt-5 max-w-3xl text-base leading-7 text-charcoal/74">{activeService.description}</p>
+
+              <div className="mt-6 flex flex-wrap gap-2">
+                {[
+                  [t.services.scope, t.services.scopeValue],
+                  [t.services.process, t.services.processValue],
+                  [t.services.outcome, t.services.outcomeValue],
+                  [t.services.mode, t.services.modeValue],
+                  [t.services.office, t.services.officeValue],
+                ].map(([label, value]) => (
+                  <span
+                    key={label}
+                    className="inline-flex items-center gap-2 border border-primary/10 bg-section px-3 py-1.5 text-sm text-charcoal/78"
+                  >
+                    <span className="font-mono text-[0.58rem] uppercase tracking-[0.12em] text-accent">{label}</span>
+                    <span className="font-medium text-primary">{value}</span>
+                  </span>
+                ))}
+              </div>
+
+              <a
+                href={activeService.href}
+                className="mt-7 inline-flex items-center gap-3 rounded-full border border-primary/14 px-5 py-2.5 font-mono text-[0.68rem] uppercase tracking-[0.14em] text-primary transition hover:border-accent hover:bg-accent hover:text-section focus-ring"
+              >
+                {t.services.viewService} <span className="h-px w-6 bg-current" />
+              </a>
+            </motion.article>
+          </AnimatePresence>
         </div>
       </div>
     </section>
