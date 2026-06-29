@@ -23,9 +23,10 @@ const config: Config = {
         },
       },
       fontFamily: {
-        display: ["var(--font-display)", "Inter", "ui-sans-serif", "system-ui", "sans-serif"],
-        body: ["var(--font-body)", "Inter", "ui-sans-serif", "system-ui", "sans-serif"],
-        mono: ["var(--font-mono)", "ui-monospace", "SFMono-Regular", "monospace"],
+        sans: ["var(--font-sans)", "ui-sans-serif", "system-ui", "sans-serif"],
+        display: ["var(--font-sans)", "ui-sans-serif", "system-ui", "sans-serif"],
+        body: ["var(--font-sans)", "ui-sans-serif", "system-ui", "sans-serif"],
+        mono: ["var(--font-sans)", "ui-sans-serif", "system-ui", "sans-serif"],
       },
       boxShadow: {
         soft: "0 18px 50px rgba(17, 17, 17, 0.08)",

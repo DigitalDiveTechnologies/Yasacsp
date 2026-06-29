@@ -3,9 +3,10 @@ export type Locale = "en" | "fr";
 export const translations = {
   en: {
     nav: {
-      services: "Services",
-      globalPresence: "Global Presence",
       company: "Company",
+      services: "Services",
+      partnerships: "Partnerships",
+      globalPresence: "Global Presence",
       contact: "Contact",
       freeConsultation: "Free Consultation",
     },
@@ -61,62 +62,32 @@ export const translations = {
     },
     services: {
       eyebrow: "Our Services",
-      title: "Services that move with your file.",
-      body: "Follow the active checkpoint across YASA's core business setup, residency, banking, and compliance services.",
-      activeService: "Active Service",
-      checkpoint: "Checkpoint",
-      scope: "Scope",
-      scopeValue: "Setup support",
-      process: "Process",
-      processValue: "Document-led",
-      outcome: "Outcome",
-      outcomeValue: "Ready to file",
-      mode: "Mode",
-      modeValue: "Managed",
-      office: "Office",
-      officeValue: "Dubai",
-      viewService: "View service",
-      items: [
-        {
-          title: "Mainland Company Formation",
-          description:
-            "DED-licensed mainland setup for businesses that need full access to the UAE local market, including ownership and activity guidance.",
-        },
-        {
-          title: "Free Zone Setup",
-          description:
-            "Company formation across IFZA, RAKEZ, Meydan, SAIF Zone, DMCC, DIFC, and other UAE free zones with fast incorporation support.",
-        },
-        {
-          title: "Offshore Company",
-          description:
-            "Offshore structures through jurisdictions such as RAK ICC and JAFZA for international trading, asset protection, and confidential ownership.",
-        },
-        {
-          title: "Business Licensing",
-          description:
-            "Commercial, professional, industrial, and e-commerce licence support, including renewals, modifications, cancellations, and freezing.",
-        },
-        {
-          title: "Visa Services",
-          description:
-            "Residence, dependent, remote work, golden, and freelance visa support with complete immigration management.",
-        },
-        {
-          title: "Emirates ID & Medical",
-          description:
-            "Medical test, Emirates ID, and PRO coordination to move residency documentation through the required government checkpoints.",
-        },
-        {
-          title: "Bank Account Opening",
-          description:
-            "Personal and corporate bank account assistance across UAE banks, matching requirements to the applicant profile and documents.",
-        },
-        {
-          title: "Accounting & VAT",
-          description:
-            "VAT registration, corporate tax filing, bookkeeping, and compliance reporting for businesses operating in the UAE.",
-        },
+      title: "Comprehensive Solutions",
+      body: "YASA CSP delivers end-to-end corporate, residency, tax, and advisory support across 19 dedicated service lines — from business incorporation and golden visa to PRO, banking, and compliance.",
+      wheelAlt: "YASA CSP comprehensive solutions wheel showing residency, incorporation, banking, tax, visa, PRO, and advisory services",
+      featured: "Featured service",
+      serviceCount: "19 service lines",
+      cta: "Free Consultation",
+      wheelServices: [
+        "Residency Service",
+        "Business Incorporation",
+        "M & A Services",
+        "Bank Account Opening",
+        "Tax & VAT",
+        "Trust and Foundation Setup",
+        "Civil Marriage Assistance",
+        "IT Services",
+        "Trademark Registration",
+        "Tourist Visa",
+        "Redomiciling",
+        "CRM Solutions",
+        "Accounting & Bookkeeping",
+        "Wills Registration",
+        "Golden Visa",
+        "Documentation Service",
+        "PRO Services",
+        "Health Insurance",
+        "Structuring",
       ],
     },
     insights: {
@@ -166,17 +137,20 @@ export const translations = {
       ],
     },
     partnership: {
-      eyebrow: "Strategic Alliance",
-      titleLine1: "Official partnership with",
-      titleLine2: "Meydan Free Zone",
-      body: "YASA and Meydan FZ signed a formal partnership contract — giving clients a direct route into one of Dubai's most distinctive free zones for media, events, and creative business.",
-      highlights: ["Certificate of Partnership", "Meydan FZ", "Dubai Office"],
-      cta: "Explore Meydan Setup",
-      imageAlt: "YASA and Meydan Free Zone partnership signing ceremony in Dubai",
-      badgeEyebrow: "Signed in Dubai",
-      badgeTitle: "Certificate of Partnership",
+      eyebrow: "Strategic Alliances",
+      titleLine1: "Trusted partnerships across",
+      titleLine2: "UAE authorities & free zones",
+      body: "YASA holds official certifications of participation and strategic partnerships with leading UAE authorities and free zones — including Meydan FZ, IFZA, DMCC, RAKEZ, DIFC, JAFZA, ADGM, and SAIF Zone. These alliances give clients a direct, trusted route into Dubai's business ecosystem for mainland, free zone, and offshore setup. From our Business Bay office, YASA coordinates applications, documentation, visas, and post-setup support with one dedicated point of contact.",
+      cta: "Explore UAE Setup",
+      imageAlt: "YASA partnership ceremonies with UAE authorities and free zones",
+      unmute: "Turn sound on",
+      mute: "Mute video",
+      sliderEyebrow: "Partnership highlights",
+      viewFullVideo: "View full video",
+      closeLightbox: "Close",
+      enlargeImage: "View full image",
       watermark: "PARTNER",
-      marquee: ["YASA × Meydan FZ", "Official Free Zone Partner", "Dubai Business Setup", "Certificate Signed"],
+      marquee: ["YASA × UAE Partners", "Official Free Zone Alliances", "Dubai Business Setup", "Certified Setup Partner"],
     },
     mediaGallery: {
       eyebrow: "Media Gallery",
@@ -219,6 +193,14 @@ export const translations = {
       services: "Services",
       contact: "Contact",
       rights: "All rights reserved. Registered in Dubai, UAE.",
+      bannerEyebrow: "Start your UAE journey",
+      bannerTitle: "Ready to launch your company in Dubai?",
+      bannerBody:
+        "Speak with YASA for a free consultation on mainland, free zone, or offshore setup — visas, banking, and compliance included.",
+      bannerCta: "Book free consultation",
+      callNow: "Call now",
+      emailUs: "Email us",
+      trustedAcross: "Trusted across UAE authorities & free zones",
       legal: {
         privacy: "Privacy Policy",
         terms: "Terms of Service",
@@ -228,9 +210,10 @@ export const translations = {
   },
   fr: {
     nav: {
-      services: "Services",
-      globalPresence: "Présence mondiale",
       company: "Entreprise",
+      services: "Services",
+      partnerships: "Partenariats",
+      globalPresence: "Présence mondiale",
       contact: "Contact",
       freeConsultation: "Consultation gratuite",
     },
@@ -286,62 +269,32 @@ export const translations = {
     },
     services: {
       eyebrow: "Nos services",
-      title: "Des services qui avancent avec votre dossier.",
-      body: "Suivez le point de contrôle actif parmi les services essentiels de YASA : création, résidence, banque et conformité.",
-      activeService: "Service actif",
-      checkpoint: "Point de contrôle",
-      scope: "Portée",
-      scopeValue: "Accompagnement création",
-      process: "Processus",
-      processValue: "Piloté par documents",
-      outcome: "Résultat",
-      outcomeValue: "Prêt à déposer",
-      mode: "Mode",
-      modeValue: "Géré",
-      office: "Bureau",
-      officeValue: "Dubaï",
-      viewService: "Voir le service",
-      items: [
-        {
-          title: "Création d'entreprise en mainland",
-          description:
-            "Création mainland agréée DED pour les entreprises ayant besoin d'un accès complet au marché local des ÉAU, avec conseils sur la propriété et l'activité.",
-        },
-        {
-          title: "Création en zone franche",
-          description:
-            "Création d'entreprise dans IFZA, RAKEZ, Meydan, SAIF Zone, DMCC, DIFC et d'autres zones franches des ÉAU avec un accompagnement rapide.",
-        },
-        {
-          title: "Société offshore",
-          description:
-            "Structures offshore via RAK ICC, JAFZA et d'autres juridictions pour le commerce international, la protection d'actifs et la confidentialité.",
-        },
-        {
-          title: "Licences commerciales",
-          description:
-            "Licences commerciales, professionnelles, industrielles et e-commerce, y compris renouvellements, modifications, annulations et gel.",
-        },
-        {
-          title: "Services de visa",
-          description:
-            "Visas de résidence, dépendants, télétravail, golden et freelance avec gestion complète de l'immigration.",
-        },
-        {
-          title: "Emirates ID et médical",
-          description:
-            "Tests médicaux, Emirates ID et coordination PRO pour faire avancer la documentation de résidence.",
-        },
-        {
-          title: "Ouverture de compte bancaire",
-          description:
-            "Assistance pour comptes personnels et professionnels auprès des banques des ÉAU, adaptée au profil et aux documents.",
-        },
-        {
-          title: "Comptabilité et TVA",
-          description:
-            "Enregistrement TVA, déclaration d'impôt sur les sociétés, tenue de livres et conformité pour les entreprises aux ÉAU.",
-        },
+      title: "Solutions complètes",
+      body: "YASA CSP propose un accompagnement de bout en bout en création d'entreprise, résidence, fiscalité et conseil à travers 19 lignes de service — de l'incorporation au golden visa, en passant par le PRO, la banque et la conformité.",
+      wheelAlt: "Roue des solutions complètes YASA CSP : résidence, incorporation, banque, fiscalité, visa, PRO et services conseil",
+      featured: "Service en vedette",
+      serviceCount: "19 lignes de service",
+      cta: "Consultation gratuite",
+      wheelServices: [
+        "Service de résidence",
+        "Incorporation d'entreprise",
+        "Services M & A",
+        "Ouverture de compte bancaire",
+        "Fiscalité et TVA",
+        "Création de trust et fondation",
+        "Assistance mariage civil",
+        "Services informatiques",
+        "Enregistrement de marque",
+        "Visa touristique",
+        "Redomiciliation",
+        "Solutions CRM",
+        "Comptabilité et tenue de livres",
+        "Enregistrement de testaments",
+        "Golden Visa",
+        "Service de documentation",
+        "Services PRO",
+        "Assurance santé",
+        "Structuration",
       ],
     },
     insights: {
@@ -391,17 +344,20 @@ export const translations = {
       ],
     },
     partnership: {
-      eyebrow: "Alliance stratégique",
-      titleLine1: "Partenariat officiel avec",
-      titleLine2: "Meydan Free Zone",
-      body: "YASA et Meydan FZ ont signé un contrat de partenariat officiel — offrant à vos clients un accès direct à l'une des zones franches les plus emblématiques de Dubaï pour les médias, événements et activités créatives.",
-      highlights: ["Certificat de partenariat", "Meydan FZ", "Bureau à Dubaï"],
-      cta: "Découvrir Meydan",
-      imageAlt: "Cérémonie de signature du partenariat entre YASA et Meydan Free Zone à Dubaï",
-      badgeEyebrow: "Signé à Dubaï",
-      badgeTitle: "Certificat de partenariat",
+      eyebrow: "Alliances stratégiques",
+      titleLine1: "Partenariats de confiance avec",
+      titleLine2: "les autorités et zones franches des EAU",
+      body: "YASA détient des certifications officielles de participation et des partenariats stratégiques avec les principales autorités et zones franches des EAU — notamment Meydan FZ, IFZA, DMCC, RAKEZ, DIFC, JAFZA, ADGM et SAIF Zone. Ces alliances offrent aux clients un accès direct et fiable à l'écosystème business de Dubaï pour la création mainland, en zone franche et offshore. Depuis notre bureau à Business Bay, YASA coordonne les dossiers, la documentation, les visas et le suivi post-création avec un seul interlocuteur.",
+      cta: "Découvrir la création aux EAU",
+      imageAlt: "Cérémonies de partenariat YASA avec les autorités et zones franches des EAU",
+      unmute: "Activer le son",
+      mute: "Couper le son",
+      sliderEyebrow: "Moments de partenariat",
+      viewFullVideo: "Voir la vidéo complète",
+      closeLightbox: "Fermer",
+      enlargeImage: "Voir l'image en grand",
       watermark: "PARTENAIRE",
-      marquee: ["YASA × Meydan FZ", "Partenaire zone franche", "Création à Dubaï", "Contrat signé"],
+      marquee: ["YASA × Partenaires EAU", "Alliances zones franches", "Création à Dubaï", "Partenaire certifié"],
     },
     mediaGallery: {
       eyebrow: "Galerie média",
@@ -444,6 +400,14 @@ export const translations = {
       services: "Services",
       contact: "Contact",
       rights: "Tous droits réservés. Enregistré à Dubaï, Émirats arabes unis.",
+      bannerEyebrow: "Démarrez votre parcours aux EAU",
+      bannerTitle: "Prêt à lancer votre entreprise à Dubaï ?",
+      bannerBody:
+        "Parlez avec YASA pour une consultation gratuite — création mainland, zone franche ou offshore, visas, banque et conformité.",
+      bannerCta: "Consultation gratuite",
+      callNow: "Appeler",
+      emailUs: "Nous écrire",
+      trustedAcross: "Partenaires des autorités et zones franches des EAU",
       legal: {
         privacy: "Politique de confidentialité",
         terms: "Conditions d'utilisation",

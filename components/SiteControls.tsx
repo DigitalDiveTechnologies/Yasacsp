@@ -29,7 +29,7 @@ export function SiteControls({ variant = "default" }: SiteControlsProps) {
 
   const buttonClass = isHero
     ? "text-section/72 hover:bg-section/10 hover:text-section"
-    : "text-charcoal/70 hover:bg-primary/5 hover:text-primary";
+    : "text-primary/80 hover:bg-primary/5 hover:text-primary";
 
   const activeClass = isHero ? "bg-accent text-section" : "bg-accent text-section";
 

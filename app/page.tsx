@@ -17,14 +17,14 @@ export default function Home() {
     <>
       <main>
         <Hero />
-        <CompanyIntro />
         <LogoSlider />
-        <SuccessBanner />
+        <CompanyIntro />
         <Services />
-        <Insights />
-        <CapabilityCards />
+        <SuccessBanner />
         <PartnershipSpotlight />
+        <CapabilityCards />
         <GlobalPresence />
+        <Insights />
       </main>
       <MediaGallery />
       <Footer />

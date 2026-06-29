@@ -1,4 +1,5 @@
 export const company = {
+  legalName: "YASA Project Management Services LLC",
   name: "YASA Corporate Service Provider",
   shortName: "YASA CSP",
   logo: "/yasa-logo.png",
@@ -17,9 +18,9 @@ export const discoveredBrandColors = {
 };
 
 export const heroVideos = [
-  "/videos/business-presence.mp4",
-  "/videos/office-process.mp4",
-  "/videos/documents-visa.mp4",
+  "/images/5382987_Coll_wavebreak_Business_3840x2160.mp4",
+  "/images/6025588_Person_People_3840x2160.mp4",
+  "/images/6025605_Person_People_3840x2160.mp4",
 ];
 
 export const services = [
@@ -96,9 +97,10 @@ export const services = [
 ];
 
 export const navigation = [
-  { label: "Services", href: "#services" },
-  { label: "Global Presence", href: "#global-presence" },
   { label: "Company", href: "#company" },
+  { label: "Services", href: "#services" },
+  { label: "Partnerships", href: "#partnership" },
+  { label: "Global Presence", href: "#global-presence" },
   { label: "Contact", href: "#footer" },
 ];
 
@@ -116,16 +118,15 @@ export const socialLinks = [
 ];
 
 export const partnerLogos = [
-  { id: "meydan", name: "Meydan", suffix: "Free Zone" },
-  { id: "dmcc", name: "DMCC", suffix: "Free Zone" },
-  { id: "ifza", name: "IFZA", suffix: "Free Zone" },
-  { id: "rakez", name: "RAKEZ", suffix: "Free Zone" },
-  { id: "difc", name: "DIFC", suffix: "Financial Centre" },
-  { id: "jafza", name: "JAFZA", suffix: "Free Zone" },
-  { id: "ded", name: "DED", suffix: "Dubai Mainland" },
-  { id: "adgm", name: "ADGM", suffix: "Abu Dhabi" },
-  { id: "saif", name: "SAIF Zone", suffix: "Sharjah" },
-  { id: "dafza", name: "DAFZA", suffix: "Free Zone" },
-  { id: "enbd", name: "Emirates NBD", suffix: "Banking" },
-  { id: "adcb", name: "ADCB", suffix: "Banking" },
+  { id: "ifza", name: "IFZA", src: "/images/logos/ifza.svg" },
+  { id: "meydan", name: "Meydan Free Zone", src: "/images/logos/meydan.svg" },
+  { id: "dubai-south", name: "Dubai South", src: "/images/logos/dubai-south.svg" },
+  { id: "dubai-chamber", name: "Dubai Chamber", src: "/images/logos/dubai-chamber.svg" },
+  { id: "dwtc", name: "DWTC", src: "/images/logos/dwtc.svg" },
+  { id: "kezad", name: "KEZAD", src: "/images/logos/kezad.svg" },
+  { id: "ajman", name: "Ajman Free Zone", src: "/images/logos/ajman.svg" },
+  { id: "shams", name: "Shams Free Zone", src: "/images/logos/shams.svg" },
+  { id: "srtip", name: "SRTIP", src: "/images/logos/srtip.svg" },
+  { id: "d3", name: "D3", src: "/images/logos/d3.svg" },
+  { id: "dubai-commercity", name: "Dubai CommerCity", src: "/images/logos/Dubai%20CommerCity.svg" },
 ] as const;

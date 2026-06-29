@@ -10,32 +10,19 @@ import {
   useScroll,
   useTransform,
 } from "framer-motion";
-import { company, heroVideos, services } from "@/lib/site";
+import { company, heroVideos } from "@/lib/site";
+import { siteImages } from "@/lib/siteImages";
+import { ServicesSection } from "@/components/ServicesSection";
 import { useLanguage } from "@/lib/i18n/LanguageProvider";
 import { SiteControls } from "@/components/SiteControls";
 
 const STAMP_INTERVAL_MS = 2600;
-const SERVICE_INTERVAL_MS = 3200;
 
-const introBandMeta = [
-  { image: "/images/yasa-band-1.jpg", position: "object-center" },
-  { image: "/images/yasa-band-2.jpg", position: "object-center" },
-  { image: "/images/yasa-band-3.jpg", position: "object-center" },
-  { image: "/images/yasa-band-4.jpg", position: "object-center" },
-] as const;
+const introBandMeta = siteImages.companyIntroBands;
 
-const insightCardImages = [
-  { variant: "large" as const, image: "/images/news-office-setup.jpg" },
-  { variant: "small" as const, image: "/images/news-business-growth.jpg" },
-  { variant: "wide" as const, image: "/images/news-residency-conference.jpg" },
-  { variant: "small" as const, image: "/images/news-compliance.jpg" },
-];
+const insightCardImages = siteImages.insightCards;
 
-const capabilityCardImages = [
-  "/images/capability-incorporation.jpg",
-  "/images/capability-partnership.jpg",
-  "/images/news-compliance.jpg",
-];
+const capabilityCardImages = siteImages.capabilityCards;
 
 function useNarrowScreen() {
   const [isNarrow, setIsNarrow] = useState(false);
@@ -140,78 +127,6 @@ function StampSeal({
   );
 }
 
-function ServiceVisual({ type }: { type: string }) {
-  const common = {
-    fill: "none",
-    stroke: "currentColor",
-    strokeWidth: 3,
-    strokeLinecap: "round" as const,
-    strokeLinejoin: "round" as const,
-  };
-
-  return (
-    <svg viewBox="0 0 240 240" className="h-full w-full" aria-hidden="true">
-      <circle cx="120" cy="120" r="94" {...common} opacity="0.14" />
-      {type === "building" && (
-        <>
-          <path d="M70 178V72h68v106M138 105h36v73M60 178h122" {...common} />
-          <path d="M88 94h12M112 94h12M88 120h12M112 120h12M88 146h12M112 146h12" {...common} />
-        </>
-      )}
-      {type === "globe" && (
-        <>
-          <circle cx="120" cy="118" r="58" {...common} />
-          <path d="M62 118h116M120 60c21 22 21 94 0 116M120 60c-21 22-21 94 0 116" {...common} />
-          <path d="M78 82c21 12 63 12 84 0M78 154c21-12 63-12 84 0" {...common} />
-        </>
-      )}
-      {type === "offshore" && (
-        <>
-          <path d="M70 158c18-12 36-12 54 0s36 12 54 0M72 180c18-10 36-10 54 0s36 10 54 0" {...common} />
-          <path d="M94 138V76h58v62M108 96h30M108 116h30" {...common} />
-        </>
-      )}
-      {type === "license" && (
-        <>
-          <path d="M78 60h68l28 30v90H78zM146 60v30h28M98 112h56M98 136h56M98 160h34" {...common} />
-          <path d="M154 156l12 12 24-32" {...common} />
-        </>
-      )}
-      {type === "visa" && (
-        <>
-          <path d="M72 62h84l20 22v94H72zM156 62v22h20M94 110h60M94 134h40" {...common} />
-          <path d="M134 154c18-12 36-12 54 0M144 174h34" {...common} />
-        </>
-      )}
-      {type === "id" && (
-        <>
-          <rect x="62" y="78" width="116" height="84" rx="8" {...common} />
-          <circle cx="98" cy="118" r="14" {...common} />
-          <path d="M76 148c8-16 36-16 44 0M132 106h28M132 128h28M132 148h18" {...common} />
-        </>
-      )}
-      {type === "bank" && (
-        <path d="M62 100l58-36 58 36zM76 112v52M106 112v52M136 112v52M166 112v52M62 176h116M92 92h56" {...common} />
-      )}
-      {type === "chart" && (
-        <>
-          <path d="M70 170V72M70 170h108M92 144l26-28 22 18 34-46" {...common} />
-          <path d="M94 170v-26M122 170v-54M150 170v-36M178 170V88" {...common} opacity="0.7" />
-        </>
-      )}
-      {type === "stamp" && (
-        <>
-          <path d="M92 74h56v46l22 28H70l22-28zM70 164h100M84 184h72M104 96h32" {...common} />
-          <path d="M86 148h68" {...common} opacity="0.65" />
-        </>
-      )}
-      {type === "briefcase" && (
-        <path d="M62 92h116v78H62zM96 92V74h48v18M62 122h116M110 122v16h20v-16" {...common} />
-      )}
-    </svg>
-  );
-}
-
 export function Hero() {
   const { t } = useLanguage();
   const heroRef = useRef<HTMLElement | null>(null);
@@ -223,9 +138,10 @@ export function Hero() {
   const contentOpacity = useTransform(scrollYProgress, [0, 0.72], [1, 0]);
 
   const navItems = [
-    { label: t.nav.services, href: "#services" },
-    { label: t.nav.globalPresence, href: "#global-presence" },
     { label: t.nav.company, href: "#company" },
+    { label: t.nav.services, href: "#services" },
+    { label: t.nav.partnerships, href: "#partnership" },
+    { label: t.nav.globalPresence, href: "#global-presence" },
     { label: t.nav.contact, href: "#footer" },
   ];
 
@@ -302,8 +218,8 @@ export function Hero() {
         <motion.div className="absolute inset-x-0 bottom-44 z-10 px-6 text-section lg:bottom-48" style={reduceMotion ? undefined : { opacity: contentOpacity }}>
           <div className="container grid gap-8 lg:grid-cols-[1fr_22rem] lg:items-end">
             <div>
-              <p className="label-text mb-5 text-accent">{t.hero.eyebrow}</p>
-              <h1 className="max-w-5xl font-display text-5xl font-semibold leading-[0.92] tracking-[-0.06em] md:text-8xl">
+              <p className="label-text mb-3">{t.hero.eyebrow}</p>
+              <h1 className="heading-hero text-balance">
                 {t.hero.title}
               </h1>
             </div>
@@ -313,8 +229,8 @@ export function Hero() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: 0.25 }}
             >
-              <p className="font-display text-2xl text-section">{company.shortName}</p>
-              <p className="mt-3 leading-7">{t.hero.cardBody}</p>
+              <p className="font-display text-xl text-section">{company.shortName}</p>
+              <p className="text-body mt-3 text-section/82">{t.hero.cardBody}</p>
             </motion.div>
           </div>
         </motion.div>
@@ -349,17 +265,17 @@ export function CompanyIntro() {
 
   return (
     <section ref={sectionRef} id="company" className="bg-section text-primary">
-      <div className="bg-brand-ink px-6 py-7 text-center text-section">
+      <div className="bg-brand-ink px-6 py-5 text-center text-section">
         <p className="label-text mb-2 text-section/55">{t.companyIntro.bannerEyebrow}</p>
-        <h2 className="font-display text-2xl font-semibold tracking-[-0.02em] md:text-3xl">
+        <h2 className="heading-section text-section">
           {t.companyIntro.bannerTitle}
         </h2>
       </div>
 
-      <div className="container py-14 md:py-20">
-        <div className="mb-10 grid gap-5 md:grid-cols-[0.7fr_1.3fr] md:items-end">
-          <p className="label-text text-accent">{t.companyIntro.clickLabel}</p>
-          <p className="max-w-2xl text-sm leading-7 text-charcoal/70">{t.companyIntro.clickBody}</p>
+      <div className="container py-10 md:py-14">
+        <div className="mb-6 grid gap-4 md:grid-cols-[0.7fr_1.3fr] md:items-end">
+          <p className="label-text">{t.companyIntro.clickLabel}</p>
+          <p className="text-body max-w-2xl">{t.companyIntro.clickBody}</p>
         </div>
 
         <motion.div
@@ -403,7 +319,7 @@ export function CompanyIntro() {
               <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_18%,rgba(255,255,255,0.2),transparent_34%)]" />
               <div className="absolute inset-y-0 left-0 w-px bg-white/24" />
               <motion.span
-                className="absolute left-1/2 top-10 -translate-x-1/2 font-display text-8xl font-semibold text-white/42 md:text-9xl"
+                className="absolute left-1/2 top-10 -translate-x-1/2 font-display text-6xl font-semibold text-white/42 md:text-7xl"
                 animate={{ opacity: isActive ? 1 : 0.5, scale: isActive ? 1.18 : 1 }}
               >
                 {stamp.letter}
@@ -422,10 +338,10 @@ export function CompanyIntro() {
                     transition={{ duration: 0.28, ease: "easeOut" }}
                   >
                     <p className="font-mono text-xs uppercase tracking-[0.2em] text-white/70">{company.shortName}</p>
-                    <h3 className="mt-3 font-display text-6xl font-semibold leading-none tracking-[-0.08em] md:text-8xl">
+                    <h3 className="heading-section mt-3 text-white">
                       {stamp.letter}
                     </h3>
-                    <p className="mt-5 max-w-md text-sm leading-7 text-white/82">{stamp.line}</p>
+                    <p className="text-body mt-4 max-w-md text-white/82">{stamp.line}</p>
                   </motion.div>
                 ) : null}
               </AnimatePresence>
@@ -453,11 +369,11 @@ function TrustStat({
 
   return (
     <div className="border-b border-primary/12 pb-6">
-      <div className="font-display text-5xl font-semibold leading-none tracking-[-0.05em] text-primary md:text-6xl">
+      <div className="stat-value">
         {isNumeric ? value.toLocaleString() : stat.value}
         {stat.suffix ? <span className="text-accent">{stat.suffix}</span> : null}
       </div>
-      <p className="label-text mt-3 text-charcoal/62">{stat.label}</p>
+      <p className="label-text mt-3 text-muted">{stat.label}</p>
     </div>
   );
 }
@@ -474,7 +390,7 @@ function WorldMap({ start, reduceMotion }: { start: boolean; reduceMotion: boole
         transition={{ duration: 0.65, ease: "easeOut" }}
       >
         <Image
-          src="/images/global-presence-map.png"
+          src={siteImages.globalPresenceMap}
           alt="Map of the United Arab Emirates with Dubai pinned"
           fill
           sizes="(min-width: 1024px) 55vw, 100vw"
@@ -487,9 +403,9 @@ function WorldMap({ start, reduceMotion }: { start: boolean; reduceMotion: boole
           animate={start ? { opacity: 1, x: 0 } : {}}
           transition={{ duration: 0.5, delay: 0.18 }}
         >
-          <p className="font-mono text-[0.68rem] uppercase tracking-[0.16em] text-accent">{t.globalPresence.physicalOffice}</p>
-          <p className="mt-1 font-display text-3xl font-semibold tracking-[-0.045em] text-primary">{t.globalPresence.hq}</p>
-          <p className="mt-2 max-w-48 text-xs leading-5 text-charcoal/66">{t.globalPresence.hqBody}</p>
+          <p className="label-text">{t.globalPresence.physicalOffice}</p>
+          <p className="mt-1 font-display text-xl font-semibold tracking-[-0.03em] text-primary">{t.globalPresence.hq}</p>
+          <p className="text-body mt-2 max-w-48">{t.globalPresence.hqBody}</p>
         </motion.div>
         <div className="absolute bottom-5 right-5 border border-white/36 bg-primary/82 px-4 py-3 text-section backdrop-blur-sm">
           <p className="font-mono text-[0.62rem] uppercase tracking-[0.16em] text-section/54">{t.globalPresence.clientRegions}</p>
@@ -507,25 +423,25 @@ export function GlobalPresence() {
   const isInView = useInView(sectionRef, { once: true, margin: "-20% 0px -20% 0px" });
 
   return (
-    <section ref={sectionRef} id="global-presence" className="bg-section px-6 py-24 text-primary md:py-32">
+    <section ref={sectionRef} id="global-presence" className="section-block bg-section text-primary">
       <div className="container">
-        <div className="mb-12 grid gap-8 lg:grid-cols-[0.8fr_1.2fr] lg:items-end">
+        <div className="section-header grid gap-4 lg:grid-cols-[0.8fr_1.2fr] lg:items-end">
           <div>
-            <p className="label-text mb-3 text-accent">{t.globalPresence.eyebrow}</p>
-            <div className="section-rule mb-8" />
+            <p className="label-text mb-2">{t.globalPresence.eyebrow}</p>
+            <div className="section-rule section-rule-spaced" />
           </div>
-          <h2 className="font-display text-5xl font-semibold leading-[0.95] tracking-[-0.055em] md:text-8xl">
+          <h2 className="heading-section text-balance">
             {t.globalPresence.title}
           </h2>
         </div>
-        <div className="grid gap-10 lg:grid-cols-[0.86fr_1.14fr]">
+        <div className="grid gap-8 lg:grid-cols-[0.86fr_1.14fr]">
           <div className="grid gap-6">
             {t.globalPresence.stats.map((stat) => (
               <TrustStat key={stat.label} stat={stat} start={isInView} reduceMotion={reduceMotion} />
             ))}
           </div>
           <div>
-            <p className="mb-5 max-w-2xl text-lg leading-8 text-charcoal/72">{t.globalPresence.body}</p>
+            <p className="text-lead mb-5">{t.globalPresence.body}</p>
             <WorldMap start={isInView} reduceMotion={reduceMotion} />
           </div>
         </div>
@@ -535,120 +451,7 @@ export function GlobalPresence() {
 }
 
 export function Services() {
-  const { t } = useLanguage();
-  const reduceMotion = Boolean(useReducedMotion() || useNarrowScreen());
-  const serviceList = services.slice(0, 8).map((service, index) => ({
-    ...service,
-    title: t.services.items[index]?.title ?? service.title,
-    description: t.services.items[index]?.description ?? service.description,
-  }));
-  const [activeIndex, setActiveIndex] = useState(0);
-  const activeService = serviceList[activeIndex] ?? serviceList[0];
-  const sectionRef = useRef<HTMLElement | null>(null);
-  const isInView = useInView(sectionRef, { margin: "-20% 0px -20% 0px" });
-
-  useEffect(() => {
-    if (!isInView || reduceMotion) return;
-    const timer = window.setInterval(() => {
-      setActiveIndex((current) => (current + 1) % serviceList.length);
-    }, SERVICE_INTERVAL_MS);
-    return () => window.clearInterval(timer);
-  }, [isInView, reduceMotion, serviceList.length]);
-
-  return (
-    <section ref={sectionRef} id="services" className="border-t border-primary/12 bg-section px-6 py-20 text-primary md:py-24">
-      <div className="container">
-        <div className="mb-10 grid gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,26rem)] lg:items-end">
-          <div>
-            <p className="label-text mb-3 text-accent">{t.services.eyebrow}</p>
-            <h2 className="font-display font-semibold leading-[0.95] tracking-[-0.055em]">{t.services.title}</h2>
-          </div>
-          <p className="text-base leading-7 text-charcoal/72">{t.services.body}</p>
-        </div>
-
-        <div className="grid gap-6 lg:grid-cols-[minmax(0,16rem)_1fr] lg:gap-8">
-          <nav className="flex gap-2 overflow-x-auto pb-1 lg:block lg:overflow-visible lg:pb-0" aria-label="Services">
-            {serviceList.map((service, index) => {
-              const isActive = index === activeIndex;
-
-              return (
-                <button
-                  key={service.href}
-                  type="button"
-                  onClick={() => setActiveIndex(index)}
-                  aria-current={isActive ? "true" : undefined}
-                  className={`shrink-0 border px-3 py-2.5 text-left transition focus-ring lg:mb-1.5 lg:flex lg:w-full lg:items-start lg:gap-3 lg:border-0 lg:border-l-2 lg:px-0 lg:py-3 lg:pl-4 ${
-                    isActive
-                      ? "border-accent bg-accent text-section lg:border-accent lg:bg-transparent lg:text-primary"
-                      : "border-primary/12 bg-surface text-charcoal/68 lg:border-transparent lg:bg-transparent lg:hover:border-primary/18 lg:hover:text-primary"
-                  }`}
-                >
-                  <span className={`font-mono text-[0.6rem] uppercase tracking-[0.14em] ${isActive ? "lg:text-accent" : "text-accent"}`}>
-                    {String(index + 1).padStart(2, "0")}
-                  </span>
-                  <span className="mt-0.5 block max-w-[9rem] font-display text-sm font-semibold leading-snug lg:mt-0 lg:max-w-none lg:text-[0.95rem]">
-                    {service.title}
-                  </span>
-                </button>
-              );
-            })}
-          </nav>
-
-          <AnimatePresence mode="wait">
-            <motion.article
-              key={activeService.href}
-              className="border border-primary/12 bg-surface p-6 shadow-soft md:p-8"
-              initial={reduceMotion ? false : { opacity: 0, x: 16 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={reduceMotion ? undefined : { opacity: 0, x: -12 }}
-              transition={{ duration: 0.3, ease: "easeOut" }}
-            >
-              <div className="flex items-start gap-4 md:gap-5">
-                <div className="h-14 w-14 shrink-0 text-accent md:h-16 md:w-16">
-                  <ServiceVisual type={activeService.visual} />
-                </div>
-                <div className="min-w-0">
-                  <p className="label-text text-accent">
-                    {t.services.activeService} · {t.services.checkpoint} {String(activeIndex + 1).padStart(2, "0")}
-                  </p>
-                  <h3 className="mt-2 font-display text-2xl font-semibold leading-tight tracking-[-0.035em] md:text-3xl">
-                    {activeService.title}
-                  </h3>
-                </div>
-              </div>
-
-              <p className="mt-5 max-w-3xl text-base leading-7 text-charcoal/74">{activeService.description}</p>
-
-              <div className="mt-6 flex flex-wrap gap-2">
-                {[
-                  [t.services.scope, t.services.scopeValue],
-                  [t.services.process, t.services.processValue],
-                  [t.services.outcome, t.services.outcomeValue],
-                  [t.services.mode, t.services.modeValue],
-                  [t.services.office, t.services.officeValue],
-                ].map(([label, value]) => (
-                  <span
-                    key={label}
-                    className="inline-flex items-center gap-2 border border-primary/10 bg-section px-3 py-1.5 text-sm text-charcoal/78"
-                  >
-                    <span className="font-mono text-[0.58rem] uppercase tracking-[0.12em] text-accent">{label}</span>
-                    <span className="font-medium text-primary">{value}</span>
-                  </span>
-                ))}
-              </div>
-
-              <a
-                href={activeService.href}
-                className="mt-7 inline-flex items-center gap-3 rounded-full border border-primary/14 px-5 py-2.5 font-mono text-[0.68rem] uppercase tracking-[0.14em] text-primary transition hover:border-accent hover:bg-accent hover:text-section focus-ring"
-              >
-                {t.services.viewService} <span className="h-px w-6 bg-current" />
-              </a>
-            </motion.article>
-          </AnimatePresence>
-        </div>
-      </div>
-    </section>
-  );
+  return <ServicesSection />;
 }
 
 export function Insights() {
@@ -660,71 +463,44 @@ export function Insights() {
   }));
 
   return (
-    <section className="bg-section px-6 py-24 text-primary md:py-32">
+    <section className="section-block bg-section text-primary">
       <div className="container">
-        <div className="mb-10">
-          <p className="label-text mb-2 text-accent">{t.insights.eyebrow}</p>
-          <h2 className="font-display text-4xl font-semibold tracking-[-0.045em] md:text-6xl">
-            {t.insights.title}
-          </h2>
+        <div className="section-header">
+          <p className="label-text mb-2">{t.insights.eyebrow}</p>
+          <h2 className="heading-section">{t.insights.title}</h2>
         </div>
 
-        <div className="grid gap-5 lg:grid-cols-[1.1fr_0.95fr]">
-          <motion.article
-            className="group relative min-h-[26rem] overflow-hidden border border-primary/12 bg-brand-ink text-section shadow-soft"
-            initial={reduceMotion ? false : { opacity: 0, y: 24 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-15% 0px" }}
-            transition={{ duration: 0.55, ease: "easeOut" }}
-          >
-            <Image
-              src={cards[0].image}
-              alt=""
-              fill
-              sizes="(min-width: 1024px) 52vw, 100vw"
-              className="object-cover transition duration-500 group-hover:scale-105"
-            />
-            <div className="absolute inset-0 bg-[linear-gradient(135deg,rgba(17,17,17,0.72),rgba(17,17,17,0.94)),linear-gradient(45deg,transparent_0%,rgba(255,255,255,0.16)_45%,transparent_75%)]" />
-            <div className="absolute inset-x-0 bottom-0 p-7">
-              <p className="label-text mb-3 text-accent">{cards[0].category}</p>
-              <h3 className="max-w-xl font-display text-4xl font-semibold leading-tight tracking-[-0.04em]">
-                {cards[0].title}
-              </h3>
-              <span className="mt-6 inline-flex items-center gap-3 font-mono text-xs uppercase tracking-[0.16em] text-section/78">
-                {t.insights.readMore} <span className="h-px w-8 bg-accent transition group-hover:w-12" />
-              </span>
-            </div>
-          </motion.article>
-
-          <div className="grid gap-5 sm:grid-cols-2">
-            {cards.slice(1).map((card, index) => (
-              <motion.article
-                key={card.title}
-                className="group border border-primary/12 bg-section shadow-soft"
-                initial={reduceMotion ? false : { opacity: 0, y: 24 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-15% 0px" }}
-                transition={{ duration: 0.55, delay: index * 0.08, ease: "easeOut" }}
-              >
-                <div className="relative h-36 overflow-hidden">
-                  <Image
-                    src={card.image}
-                    alt=""
-                    fill
-                    sizes="(min-width: 768px) 25vw, 100vw"
-                    className="object-cover transition duration-500 group-hover:scale-105"
-                  />
-                </div>
-                <div className="p-6">
-                  <p className="label-text mb-3 text-accent">{card.category}</p>
-                  <h3 className="font-display text-2xl font-semibold leading-tight tracking-[-0.035em]">{card.title}</h3>
-                  <span className="mt-5 inline-flex items-center gap-3 font-mono text-xs uppercase tracking-[0.16em] text-charcoal/70">
-                    {t.insights.readMore} <span className="h-px w-7 bg-accent transition group-hover:w-10" />
-                  </span>
-                </div>
-              </motion.article>
-            ))}
-          </div>
+        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+          {cards.map((card, index) => (
+            <motion.article
+              key={card.title}
+              className="group flex h-full flex-col border border-primary/12 bg-section shadow-soft"
+              initial={reduceMotion ? false : { opacity: 0, y: 24 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-15% 0px" }}
+              transition={{ duration: 0.55, delay: index * 0.08, ease: "easeOut" }}
+              whileHover={reduceMotion ? undefined : { y: -6 }}
+            >
+              <div className="relative h-44 overflow-hidden">
+                <Image
+                  src={card.image}
+                  alt=""
+                  fill
+                  sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"
+                  className="object-cover transition duration-500 group-hover:scale-105"
+                />
+              </div>
+              <div className="flex flex-1 flex-col p-6">
+                <p className="label-text mb-3">{card.category}</p>
+                <h3 className="heading-card">
+                  {card.title}
+                </h3>
+                <span className="mt-auto inline-flex items-center gap-3 pt-5 font-mono text-xs uppercase tracking-[0.16em] text-muted">
+                  {t.insights.readMore} <span className="h-px w-7 bg-accent transition group-hover:w-10" />
+                </span>
+              </div>
+            </motion.article>
+          ))}
         </div>
       </div>
     </section>
@@ -763,40 +539,40 @@ export function SuccessBanner() {
     {
       title: "One-stop setup execution",
       body: "One partner for company registration, licensing, visas, banking, and compliance.",
-      image: "/images/capability-incorporation.jpg",
+      image: siteImages.formationBenefits[0],
       accent: "from-brand-ink/92 to-accent/86",
     },
     {
       title: "Transparent guidance",
       body: "Clear steps, requirements, timelines, and options based on your activity.",
-      image: "/images/capability-partnership.jpg",
+      image: siteImages.formationBenefits[1],
       accent: "from-brand-ink/92 to-brand-teal/84",
     },
     {
       title: "Compliance-first handling",
       body: "Correct documentation, sequencing, and structured submissions from day one.",
-      image: "/images/news-compliance.jpg",
+      image: siteImages.formationBenefits[2],
       accent: "from-brand-ink/92 to-amber-700/82",
     },
     {
       title: "Post-setup support",
       body: "Ongoing assistance for renewals, amendments, visas, banking, and compliance needs.",
-      image: "/images/news-business-growth.jpg",
+      image: siteImages.formationBenefits[3],
       accent: "from-brand-ink/92 to-indigo-900/82",
     },
   ];
 
   return (
-    <section className="bg-section px-6 py-24 text-primary md:py-32">
+    <section id="process" className="section-block bg-section text-primary">
       <div className="container">
-        <div className="mb-12 grid gap-6 lg:grid-cols-[0.8fr_1.2fr] lg:items-end">
+        <div className="section-header grid gap-4 lg:grid-cols-[0.8fr_1.2fr] lg:items-end">
           <div>
-            <p className="label-text mb-3 text-accent">Company Formation</p>
-            <h2 className="font-display text-5xl font-semibold leading-[0.95] tracking-[-0.055em] md:text-7xl">
+            <p className="label-text mb-2">Company Formation</p>
+            <h2 className="heading-section">
               Our Company Formation Process
             </h2>
           </div>
-          <p className="max-w-3xl text-base leading-8 text-charcoal/70 lg:justify-self-end">
+          <p className="text-lead lg:justify-self-end">
             From initial consultation to license issuance, YASA keeps every step clear, documented, and coordinated for your UAE business setup.
           </p>
         </div>
@@ -807,10 +583,10 @@ export function SuccessBanner() {
               <span className="inline-flex rounded-full border border-primary/18 px-4 py-1 font-mono text-[0.68rem] uppercase tracking-[0.14em] text-primary/72">
                 {item.step}
               </span>
-              <h3 className="mt-5 font-display text-3xl font-semibold tracking-[-0.035em]">{item.title}</h3>
-              <div className="mt-6 grid gap-4">
+              <h3 className="heading-card-lg mt-4">{item.title}</h3>
+              <div className="mt-4 grid gap-2.5">
                 {item.points.map((point) => (
-                  <p key={point} className="flex gap-3 text-sm leading-7 text-charcoal/72">
+                  <p key={point} className="text-body flex gap-3">
                     <span className="mt-2 h-2 w-2 shrink-0 rounded-sm bg-accent" />
                     <span>{point}</span>
                   </p>
@@ -820,7 +596,7 @@ export function SuccessBanner() {
           ))}
         </div>
 
-        <div className="mt-16 grid gap-5 md:grid-cols-2">
+        <div className="section-stack grid gap-4 md:grid-cols-2">
           {benefits.map((item) => (
             <article key={item.title} className="grid min-h-44 overflow-hidden border border-primary/10 bg-primary text-section shadow-soft sm:grid-cols-[0.9fr_1.1fr]">
               <div className="relative min-h-44">
@@ -833,8 +609,8 @@ export function SuccessBanner() {
                 />
               </div>
               <div className={`bg-gradient-to-br ${item.accent} p-7 text-left`}>
-                <h3 className="font-display text-2xl font-semibold tracking-[-0.03em]">{item.title}</h3>
-                <p className="mt-3 text-sm leading-7 text-section/82">{item.body}</p>
+                <h3 className="heading-card">{item.title}</h3>
+                <p className="text-body mt-3 text-section/82">{item.body}</p>
               </div>
             </article>
           ))}
@@ -853,14 +629,14 @@ export function CapabilityCards() {
   }));
 
   return (
-    <section className="bg-section px-6 py-24 text-primary md:py-32">
+    <section className="section-block bg-section text-primary">
       <div className="container">
-        <div className="mx-auto mb-12 max-w-3xl text-center">
-          <p className="label-text mb-3 text-accent">{t.capability.eyebrow}</p>
-          <h2 className="font-display text-4xl font-semibold tracking-[-0.045em] md:text-6xl">
+        <div className="section-header mx-auto max-w-3xl text-center">
+          <p className="label-text mb-2">{t.capability.eyebrow}</p>
+          <h2 className="heading-section">
             {t.capability.title}
           </h2>
-          <p className="mt-4 text-sm leading-7 text-charcoal/68">{t.capability.body}</p>
+          <p className="text-lead mx-auto mt-3">{t.capability.body}</p>
         </div>
 
         <div className="grid gap-5 md:grid-cols-3">
@@ -884,9 +660,9 @@ export function CapabilityCards() {
                 />
               </div>
               <div className="p-7">
-                <h3 className="font-display text-3xl font-semibold leading-tight tracking-[-0.035em]">{card.title}</h3>
-                <p className="mt-4 text-sm leading-7 text-charcoal/70">{card.description}</p>
-                <span className="mt-8 inline-flex items-center gap-3 rounded-full bg-accent px-4 py-2 font-mono text-[0.65rem] uppercase tracking-[0.16em] text-section transition group-hover:bg-brand-ink">
+                <h3 className="heading-card-lg">{card.title}</h3>
+                <p className="text-body mt-3">{card.description}</p>
+                <span className="mt-6 inline-flex items-center gap-3 rounded-full bg-accent px-4 py-2 font-mono text-[0.65rem] uppercase tracking-[0.16em] text-section transition group-hover:bg-brand-ink">
                   {t.capability.learnMore} <span className="h-px w-6 bg-section" />
                 </span>
               </div>

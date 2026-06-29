@@ -35,13 +35,13 @@ export function MediaGallery() {
   const slides = [...mediaLinks, ...mediaLinks];
 
   return (
-    <section id="media-gallery" className="border-t border-primary/12 bg-section py-24 text-primary md:py-28">
-      <div className="container mb-12 px-6">
+    <section id="media-gallery" className="section-block border-t border-primary/12 bg-section text-primary">
+      <div className="container mb-8 px-6">
         <div className="grid gap-8 lg:grid-cols-[1fr_auto] lg:items-end">
           <div>
-            <p className="label-text mb-3 text-accent">{t.mediaGallery.eyebrow}</p>
-            <h2 className="font-display font-semibold leading-[0.95] tracking-[-0.055em]">{t.mediaGallery.title}</h2>
-            <p className="mt-5 max-w-2xl text-base leading-8 text-charcoal/72">{t.mediaGallery.body}</p>
+            <p className="label-text mb-3">{t.mediaGallery.eyebrow}</p>
+            <h2 className="heading-section">{t.mediaGallery.title}</h2>
+            <p className="text-lead mt-4 max-w-2xl">{t.mediaGallery.body}</p>
           </div>
 
           <a
@@ -60,9 +60,9 @@ export function MediaGallery() {
               />
             </div>
             <div>
-              <p className="font-mono text-[0.62rem] uppercase tracking-[0.16em] text-accent">@{instagramProfile.handle}</p>
+              <p className="label-text">@{instagramProfile.handle}</p>
               <p className="mt-1 font-display text-lg font-semibold">{t.mediaGallery.profileTitle}</p>
-              <p className="text-sm text-charcoal/62">{t.mediaGallery.profileBody}</p>
+              <p className="text-muted text-sm">{t.mediaGallery.profileBody}</p>
             </div>
             <InstagramIcon className="h-5 w-5 text-accent" />
           </a>
@@ -95,7 +95,7 @@ export function MediaGallery() {
                   </p>
                   <ExternalLinkIcon className="h-4 w-4 shrink-0 text-accent" />
                 </div>
-                <h3 className="mt-3 max-w-[18rem] font-display text-2xl font-semibold leading-tight sm:max-w-[20rem] sm:text-3xl">
+                <h3 className="heading-card mt-3 max-w-[18rem] sm:max-w-[20rem]">
                   {item.title}
                 </h3>
               </div>
@@ -104,12 +104,12 @@ export function MediaGallery() {
         </div>
       </div>
 
-      <div className="container mt-10 px-6 text-center">
+      <div className="container mt-7 px-6 text-center">
         <a
           href={instagramProfile.url}
           target="_blank"
           rel="noreferrer"
-          className="inline-flex items-center gap-3 rounded-full border border-primary/12 bg-surface px-6 py-3 font-mono text-xs uppercase tracking-[0.16em] text-primary transition hover:border-accent hover:bg-accent hover:text-section focus-ring"
+          className="btn-pill focus-ring"
         >
           <InstagramIcon className="h-4 w-4" />
           {t.mediaGallery.followCta}
