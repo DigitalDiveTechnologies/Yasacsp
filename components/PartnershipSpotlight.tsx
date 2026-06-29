@@ -52,15 +52,18 @@ export function PartnershipSpotlight() {
   const { t } = useLanguage();
   const reduceMotion = Boolean(useReducedMotion());
   const sectionRef = useRef<HTMLElement>(null);
+  const videoViewportRef = useRef<HTMLDivElement>(null);
   const previewVideoRef = useRef<HTMLVideoElement>(null);
   const modalVideoRef = useRef<HTMLVideoElement>(null);
-  const isInView = useInView(sectionRef, { margin: "-20% 0px", amount: 0.35 });
+  const isVideoInView = useInView(videoViewportRef, { amount: 0, margin: "120px 0px" });
   const sliderItems = [...partnershipSlides, ...partnershipSlides];
 
   const [activeIndex, setActiveIndex] = useState(0);
   const [isMuted, setIsMuted] = useState(true);
   const [lightbox, setLightbox] = useState<LightboxState>({ type: "closed" });
   const [mounted, setMounted] = useState(false);
+  const [videoFailed, setVideoFailed] = useState(false);
+  const [isPlaying, setIsPlaying] = useState(false);
   const rotateTimerRef = useRef<number | null>(null);
   const isMutedRef = useRef(isMuted);
 
@@ -89,63 +92,50 @@ export function PartnershipSpotlight() {
   }, [clearRotateTimer]);
 
   useEffect(() => {
-    const video = previewVideoRef.current;
-    if (!video || reduceMotion) return;
+    setVideoFailed(false);
+    setIsPlaying(false);
+  }, [activeVideo.src]);
 
-    if (!isInView || lightbox.type !== "closed") {
+  useEffect(() => {
+    const video = previewVideoRef.current;
+    if (!video || reduceMotion || videoFailed) return;
+
+    video.muted = isMutedRef.current;
+
+    if (!isVideoInView || lightbox.type !== "closed") {
       clearRotateTimer();
       video.pause();
       return;
     }
 
-    let cancelled = false;
-    let started = false;
-
-    const beginPlayback = async () => {
-      if (cancelled || started) return;
-      started = true;
-
-      video.currentTime = 0;
-      video.muted = isMutedRef.current;
-
-      try {
-        await video.play();
-        if (!cancelled) {
-          scheduleNextVideo();
-        }
-      } catch {
-        if (!cancelled) {
-          scheduleNextVideo();
-        }
-      }
-    };
-
-    const handleReady = () => {
-      void beginPlayback();
-    };
-
     clearRotateTimer();
-    video.addEventListener("loadeddata", handleReady);
-    video.src = activeVideo.src;
-    video.load();
 
-    if (video.readyState >= HTMLMediaElement.HAVE_CURRENT_DATA) {
-      void beginPlayback();
+    const tryPlay = () => {
+      video.muted = isMutedRef.current;
+      video.play()
+        .then(() => {
+          scheduleNextVideo();
+        })
+        .catch(() => {
+          scheduleNextVideo();
+        });
+    };
+
+    if (video.readyState >= HTMLMediaElement.HAVE_FUTURE_DATA) {
+      tryPlay();
+      return;
     }
 
-    return () => {
-      cancelled = true;
-      clearRotateTimer();
-      video.removeEventListener("loadeddata", handleReady);
-      video.pause();
-    };
+    video.addEventListener("canplay", tryPlay, { once: true });
+    return () => video.removeEventListener("canplay", tryPlay);
   }, [
     activeVideo.src,
     clearRotateTimer,
-    isInView,
+    isVideoInView,
     lightbox.type,
     reduceMotion,
     scheduleNextVideo,
+    videoFailed,
   ]);
 
   useEffect(() => {
@@ -311,8 +301,11 @@ export function PartnershipSpotlight() {
                 <div className="absolute -left-2 -top-2 z-10 h-12 w-12 border-l-2 border-t-2 border-accent sm:h-14 sm:w-14" aria-hidden="true" />
                 <div className="absolute -bottom-2 -right-2 z-10 h-12 w-12 border-b-2 border-r-2 border-accent sm:h-14 sm:w-14" aria-hidden="true" />
 
-                <div className="relative aspect-video w-full overflow-hidden border border-section/12 bg-brand-ink/50 shadow-[0_32px_90px_rgba(0,0,0,0.42),0_0_48px_rgba(26,107,124,0.14)]">
-                  {reduceMotion ? (
+                <div
+                  ref={videoViewportRef}
+                  className="relative aspect-video w-full overflow-hidden border border-section/12 bg-brand-ink/50 shadow-[0_32px_90px_rgba(0,0,0,0.42),0_0_48px_rgba(26,107,124,0.14)]"
+                >
+                  {reduceMotion || videoFailed ? (
                     <Image
                       src={activeVideo.poster}
                       alt={t.partnership.imageAlt}
@@ -337,13 +330,29 @@ export function PartnershipSpotlight() {
                         </span>
                       </button>
 
+                      <Image
+                        src={activeVideo.poster}
+                        alt=""
+                        fill
+                        sizes="(min-width: 1280px) 58vw, (min-width: 1024px) 55vw, 100vw"
+                        className={`object-cover transition-opacity duration-500 ${isPlaying ? "opacity-0" : "opacity-100"}`}
+                        unoptimized
+                        priority
+                        aria-hidden={isPlaying}
+                      />
+
                       <video
                         ref={previewVideoRef}
-                        className="absolute inset-0 h-full w-full object-cover"
+                        key={activeVideo.src}
+                        className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-500 ${isPlaying ? "opacity-100" : "opacity-0"}`}
+                        src={activeVideo.src}
+                        autoPlay
                         muted
                         playsInline
                         preload="auto"
                         aria-label={t.partnership.imageAlt}
+                        onPlaying={() => setIsPlaying(true)}
+                        onError={() => setVideoFailed(true)}
                       />
 
                       <button
