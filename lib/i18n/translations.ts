@@ -57,8 +57,12 @@ export const translations = {
       cta: "Start a File",
     },
     logoSlider: {
-      eyebrow: "Trusted Authorities & Partners",
+      title: "Mainland and Freezone Jurisdictions",
       ariaLabel: "Partner and authority logos",
+      advisory:
+        "Not sure which jurisdiction suits your business? We'll advise you in a free 15-minute call.",
+      callCta: "Call now",
+      whatsappCta: "WhatsApp us",
     },
     services: {
       eyebrow: "Our Services",
@@ -140,7 +144,7 @@ export const translations = {
       eyebrow: "Strategic Alliances",
       titleLine1: "Trusted partnerships across",
       titleLine2: "UAE authorities & free zones",
-      body: "YASA holds official certifications of participation and strategic partnerships with leading UAE authorities and free zones — including Meydan FZ, IFZA, DMCC, RAKEZ, DIFC, JAFZA, ADGM, and SAIF Zone. These alliances give clients a direct, trusted route into Dubai's business ecosystem for mainland, free zone, and offshore setup. From our Business Bay office, YASA coordinates applications, documentation, visas, and post-setup support with one dedicated point of contact.",
+      body: "YASA holds official certifications of participation and strategic partnerships with leading UAE authorities and free zones. These alliances give clients a direct, trusted route into Dubai's business ecosystem for mainland, free zone, and offshore setup. From our Business Bay office, YASA coordinates applications, documentation, visas, and post-setup support with one dedicated point of contact.",
       cta: "Explore UAE Setup",
       imageAlt: "YASA partnership ceremonies with UAE authorities and free zones",
       unmute: "Turn sound on",
@@ -199,6 +203,7 @@ export const translations = {
         "Speak with YASA for a free consultation on mainland, free zone, or offshore setup — visas, banking, and compliance included.",
       bannerCta: "Book free consultation",
       callNow: "Call now",
+      whatsappUs: "WhatsApp",
       emailUs: "Email us",
       trustedAcross: "Trusted across UAE authorities & free zones",
       legal: {
@@ -264,8 +269,12 @@ export const translations = {
       cta: "Démarrer un dossier",
     },
     logoSlider: {
-      eyebrow: "Autorités et partenaires de confiance",
+      title: "Juridictions mainland et free zone",
       ariaLabel: "Logos des partenaires et autorités",
+      advisory:
+        "Vous ne savez pas quelle juridiction convient à votre entreprise ? Nous vous conseillons lors d'un appel gratuit de 15 minutes.",
+      callCta: "Appeler",
+      whatsappCta: "WhatsApp",
     },
     services: {
       eyebrow: "Nos services",
@@ -347,7 +356,7 @@ export const translations = {
       eyebrow: "Alliances stratégiques",
       titleLine1: "Partenariats de confiance avec",
       titleLine2: "les autorités et zones franches des EAU",
-      body: "YASA détient des certifications officielles de participation et des partenariats stratégiques avec les principales autorités et zones franches des EAU — notamment Meydan FZ, IFZA, DMCC, RAKEZ, DIFC, JAFZA, ADGM et SAIF Zone. Ces alliances offrent aux clients un accès direct et fiable à l'écosystème business de Dubaï pour la création mainland, en zone franche et offshore. Depuis notre bureau à Business Bay, YASA coordonne les dossiers, la documentation, les visas et le suivi post-création avec un seul interlocuteur.",
+      body: "YASA détient des certifications officielles de participation et des partenariats stratégiques avec les principales autorités et zones franches des EAU. Ces alliances offrent aux clients un accès direct et fiable à l'écosystème business de Dubaï pour la création mainland, en zone franche et offshore. Depuis notre bureau à Business Bay, YASA coordonne les dossiers, la documentation, les visas et le suivi post-création avec un seul interlocuteur.",
       cta: "Découvrir la création aux EAU",
       imageAlt: "Cérémonies de partenariat YASA avec les autorités et zones franches des EAU",
       unmute: "Activer le son",
@@ -406,6 +415,7 @@ export const translations = {
         "Parlez avec YASA pour une consultation gratuite — création mainland, zone franche ou offshore, visas, banque et conformité.",
       bannerCta: "Consultation gratuite",
       callNow: "Appeler",
+      whatsappUs: "WhatsApp",
       emailUs: "Nous écrire",
       trustedAcross: "Partenaires des autorités et zones franches des EAU",
       legal: {

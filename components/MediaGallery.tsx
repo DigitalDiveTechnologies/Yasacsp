@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import { instagramProfile, mediaLinks } from "@/lib/instagram";
 import { useLanguage } from "@/lib/i18n/LanguageProvider";
 
@@ -35,11 +34,11 @@ export function MediaGallery() {
   const slides = [...mediaLinks, ...mediaLinks];
 
   return (
-    <section id="media-gallery" className="section-block border-t border-primary/12 bg-section text-primary">
+    <section id="media-gallery" className="section-block border-t border-primary/12 bg-section-bg text-primary">
       <div className="container mb-8 px-6">
         <div className="grid gap-8 lg:grid-cols-[1fr_auto] lg:items-end">
           <div>
-            <p className="label-text mb-3">{t.mediaGallery.eyebrow}</p>
+            <p className="section-eyebrow mb-3">{t.mediaGallery.eyebrow}</p>
             <h2 className="heading-section">{t.mediaGallery.title}</h2>
             <p className="text-lead mt-4 max-w-2xl">{t.mediaGallery.body}</p>
           </div>
@@ -51,12 +50,10 @@ export function MediaGallery() {
             className="inline-flex items-center gap-4 border border-primary/12 bg-surface px-5 py-4 transition hover:border-accent focus-ring"
           >
             <div className="relative h-14 w-14 overflow-hidden rounded-full border border-primary/12">
-              <Image
+              <img
                 src={instagramProfile.profileImage}
                 alt={t.mediaGallery.profileAlt}
-                fill
-                sizes="56px"
-                className="object-cover"
+                className="h-full w-full object-cover"
               />
             </div>
             <div>
@@ -80,12 +77,12 @@ export function MediaGallery() {
               className="group relative block h-80 w-80 shrink-0 overflow-hidden border border-primary/12 bg-surface shadow-soft transition hover:border-accent sm:h-96 sm:w-96 lg:h-[26rem] lg:w-[26rem]"
               aria-label={`${t.mediaGallery.openLink}: ${item.title}`}
             >
-              <Image
+              <img
                 src={item.image}
                 alt=""
-                fill
-                sizes="(min-width: 1024px) 416px, (min-width: 640px) 384px, 320px"
-                className="object-cover transition duration-700 group-hover:scale-105"
+                loading="lazy"
+                decoding="async"
+                className="absolute inset-0 h-full w-full object-cover transition duration-700 group-hover:scale-105"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-brand-ink/92 via-brand-ink/35 to-transparent" />
               <div className="absolute inset-x-0 bottom-0 p-5 text-section sm:p-6">

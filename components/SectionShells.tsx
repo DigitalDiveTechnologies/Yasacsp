@@ -158,9 +158,17 @@ export function Hero() {
       if (video && index !== activeVideo) video.pause();
     });
     if (!currentVideo) return;
+    currentVideo.muted = true;
     currentVideo.currentTime = 0;
     currentVideo.play().catch(() => undefined);
   }, [activeVideo]);
+
+  useEffect(() => {
+    const firstVideo = videoRefs.current[0];
+    if (!firstVideo || reduceMotion) return;
+    firstVideo.muted = true;
+    firstVideo.play().catch(() => undefined);
+  }, [reduceMotion]);
 
   return (
     <section ref={heroRef} className="relative h-[118vh] bg-brand-ink">
@@ -174,7 +182,7 @@ export function Hero() {
               }}
               className={`hero-video ${index === activeVideo ? "is-active" : ""}`}
               src={src}
-              autoPlay={index === 0}
+              autoPlay
               muted
               playsInline
               preload="auto"
@@ -203,7 +211,9 @@ export function Hero() {
                   </a>
                 ))}
                 <motion.a
-                  href={company.phoneHref}
+                  href={company.consultationHref}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="border border-accent px-4 py-2 text-section transition hover:bg-accent hover:text-brand-ink focus-ring"
                   whileHover={reduceMotion ? undefined : { y: -2 }}
                   whileTap={reduceMotion ? undefined : { scale: 0.98 }}
@@ -264,7 +274,7 @@ export function CompanyIntro() {
   const activeStamp = introStamps[activeBand];
 
   return (
-    <section ref={sectionRef} id="company" className="bg-section text-primary">
+    <section ref={sectionRef} id="company" className="bg-section-bg text-primary">
       <div className="bg-brand-ink px-6 py-5 text-center text-section">
         <p className="label-text mb-2 text-section/55">{t.companyIntro.bannerEyebrow}</p>
         <h2 className="heading-section text-section">
@@ -294,7 +304,7 @@ export function CompanyIntro() {
               key={`${stamp.letter}-${label}`}
               type="button"
               onClick={() => setActiveBand(index)}
-              className="relative flex items-stretch overflow-hidden bg-primary focus-ring"
+              className="relative flex items-stretch overflow-hidden bg-brand-ink focus-ring"
               animate={{ flex: isActive ? 3.4 : 0.72 }}
               whileHover={reduceMotion ? undefined : { scale: 1.025 }}
               whileTap={reduceMotion ? undefined : { scale: 0.985 }}
@@ -382,7 +392,7 @@ function WorldMap({ start, reduceMotion }: { start: boolean; reduceMotion: boole
   const { t } = useLanguage();
 
   return (
-    <div className="relative overflow-hidden border border-primary/12 bg-section shadow-soft">
+    <div className="relative overflow-hidden border border-primary/12 bg-section-bg shadow-soft">
       <motion.div
         className="relative aspect-[1.45/1] min-h-[24rem]"
         initial={reduceMotion ? false : { opacity: 0, y: 12 }}
@@ -398,7 +408,7 @@ function WorldMap({ start, reduceMotion }: { start: boolean; reduceMotion: boole
         />
         <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(255,255,255,0.04),rgba(17,17,17,0.26)),linear-gradient(90deg,rgba(255,255,255,0.3),transparent_42%)]" />
         <motion.div
-          className="absolute left-6 top-6 border border-white/40 bg-white/86 px-5 py-4 shadow-soft backdrop-blur-sm md:left-8 md:top-8"
+          className="absolute left-6 top-6 border border-white/40 bg-section-bg/86 px-5 py-4 shadow-soft backdrop-blur-sm md:left-8 md:top-8"
           initial={reduceMotion ? false : { opacity: 0, x: -12 }}
           animate={start ? { opacity: 1, x: 0 } : {}}
           transition={{ duration: 0.5, delay: 0.18 }}
@@ -407,7 +417,7 @@ function WorldMap({ start, reduceMotion }: { start: boolean; reduceMotion: boole
           <p className="mt-1 font-display text-xl font-semibold tracking-[-0.03em] text-primary">{t.globalPresence.hq}</p>
           <p className="text-body mt-2 max-w-48">{t.globalPresence.hqBody}</p>
         </motion.div>
-        <div className="absolute bottom-5 right-5 border border-white/36 bg-primary/82 px-4 py-3 text-section backdrop-blur-sm">
+        <div className="absolute bottom-5 right-5 border border-white/36 bg-brand-ink/82 px-4 py-3 text-section backdrop-blur-sm">
           <p className="font-mono text-[0.62rem] uppercase tracking-[0.16em] text-section/54">{t.globalPresence.clientRegions}</p>
           <p className="mt-1 text-sm text-section/82">{t.globalPresence.clientRegionsBody}</p>
         </div>
@@ -423,16 +433,14 @@ export function GlobalPresence() {
   const isInView = useInView(sectionRef, { once: true, margin: "-20% 0px -20% 0px" });
 
   return (
-    <section ref={sectionRef} id="global-presence" className="section-block bg-section text-primary">
+    <section ref={sectionRef} id="global-presence" className="section-block bg-section-bg text-primary">
       <div className="container">
-        <div className="section-header grid gap-4 lg:grid-cols-[0.8fr_1.2fr] lg:items-end">
+        <div className="section-header grid gap-4 lg:grid-cols-[0.8fr_1.2fr] lg:items-start">
           <div>
-            <p className="label-text mb-2">{t.globalPresence.eyebrow}</p>
+            <p className="section-eyebrow mb-3">{t.globalPresence.eyebrow}</p>
             <div className="section-rule section-rule-spaced" />
+            <h2 className="heading-section text-balance">{t.globalPresence.title}</h2>
           </div>
-          <h2 className="heading-section text-balance">
-            {t.globalPresence.title}
-          </h2>
         </div>
         <div className="grid gap-8 lg:grid-cols-[0.86fr_1.14fr]">
           <div className="grid gap-6">
@@ -463,10 +471,10 @@ export function Insights() {
   }));
 
   return (
-    <section className="section-block bg-section text-primary">
+    <section className="section-block bg-section-bg text-primary">
       <div className="container">
         <div className="section-header">
-          <p className="label-text mb-2">{t.insights.eyebrow}</p>
+          <p className="section-eyebrow mb-3">{t.insights.eyebrow}</p>
           <h2 className="heading-section">{t.insights.title}</h2>
         </div>
 
@@ -474,7 +482,7 @@ export function Insights() {
           {cards.map((card, index) => (
             <motion.article
               key={card.title}
-              className="group flex h-full flex-col border border-primary/12 bg-section shadow-soft"
+              className="group flex h-full flex-col border border-primary/12 bg-section-bg shadow-soft"
               initial={reduceMotion ? false : { opacity: 0, y: 24 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-15% 0px" }}
@@ -563,18 +571,17 @@ export function SuccessBanner() {
   ];
 
   return (
-    <section id="process" className="section-block bg-section text-primary">
+    <section id="process" className="section-block bg-section-bg text-primary">
       <div className="container">
-        <div className="section-header grid gap-4 lg:grid-cols-[0.8fr_1.2fr] lg:items-end">
-          <div>
-            <p className="label-text mb-2">Company Formation</p>
-            <h2 className="heading-section">
-              Our Company Formation Process
-            </h2>
+        <div className="section-header">
+          <p className="section-eyebrow section-header-intro">Company Formation</p>
+          <div className="section-rule section-rule-spaced" />
+          <div className="section-header-split">
+            <h2 className="heading-section text-balance">Our Company Formation Process</h2>
+            <p className="text-lead max-w-none">
+              From initial consultation to license issuance, YASA keeps every step clear, documented, and coordinated for your UAE business setup.
+            </p>
           </div>
-          <p className="text-lead lg:justify-self-end">
-            From initial consultation to license issuance, YASA keeps every step clear, documented, and coordinated for your UAE business setup.
-          </p>
         </div>
 
         <div className="grid gap-5 lg:grid-cols-3">
@@ -598,7 +605,7 @@ export function SuccessBanner() {
 
         <div className="section-stack grid gap-4 md:grid-cols-2">
           {benefits.map((item) => (
-            <article key={item.title} className="grid min-h-44 overflow-hidden border border-primary/10 bg-primary text-section shadow-soft sm:grid-cols-[0.9fr_1.1fr]">
+            <article key={item.title} className="grid min-h-44 overflow-hidden border border-primary/10 bg-brand-ink text-section shadow-soft sm:grid-cols-[0.9fr_1.1fr]">
               <div className="relative min-h-44">
                 <Image
                   src={item.image}
@@ -629,21 +636,19 @@ export function CapabilityCards() {
   }));
 
   return (
-    <section className="section-block bg-section text-primary">
+    <section className="section-block bg-section-bg text-primary">
       <div className="container">
         <div className="section-header mx-auto max-w-3xl text-center">
-          <p className="label-text mb-2">{t.capability.eyebrow}</p>
-          <h2 className="heading-section">
-            {t.capability.title}
-          </h2>
-          <p className="text-lead mx-auto mt-3">{t.capability.body}</p>
+          <p className="section-eyebrow mb-3">{t.capability.eyebrow}</p>
+          <h2 className="heading-section">{t.capability.title}</h2>
+          <p className="text-lead mx-auto mt-4">{t.capability.body}</p>
         </div>
 
         <div className="grid gap-5 md:grid-cols-3">
           {cards.map((card, index) => (
             <motion.article
               key={card.title}
-              className="group border border-primary/12 bg-section shadow-soft"
+              className="group border border-primary/12 bg-section-bg shadow-soft"
               initial={reduceMotion ? false : { opacity: 0, y: 24 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-15% 0px" }}

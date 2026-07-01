@@ -24,8 +24,8 @@ export function SiteControls({ variant = "default" }: SiteControlsProps) {
   const isHero = variant === "hero";
 
   const shellClass = isHero
-    ? "border border-section/20 bg-primary/35 text-section backdrop-blur-md"
-    : "border border-primary/12 bg-section text-primary shadow-soft";
+    ? "border border-section/20 bg-brand-ink/35 text-section backdrop-blur-md"
+    : "border border-primary/12 bg-section-bg text-primary shadow-soft";
 
   const buttonClass = isHero
     ? "text-section/72 hover:bg-section/10 hover:text-section"

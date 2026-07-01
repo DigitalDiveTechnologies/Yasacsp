@@ -13,6 +13,7 @@ const config: Config = {
         parchment: "var(--color-parchment)",
         accent: "var(--color-accent)",
         section: "var(--color-section)",
+        "section-bg": "var(--color-section-bg)",
         charcoal: "var(--color-charcoal)",
         surface: "var(--color-surface)",
         brand: {

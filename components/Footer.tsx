@@ -6,6 +6,24 @@ import { useRef } from "react";
 import { company, legalLinks, services, socialLinks } from "@/lib/site";
 import { useLanguage } from "@/lib/i18n/LanguageProvider";
 
+function WhatsAppIcon() {
+  return (
+    <svg viewBox="0 0 24 24" className="h-4 w-4" aria-hidden="true">
+      <path
+        d="M12 2a10 10 0 0 0-8.7 14.9L2 22l5.3-1.4A10 10 0 1 0 12 2Z"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.7"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M8.8 9.4c.2-.5.4-.5.7-.5h.6c.2 0 .4 0 .5.3l.8 1.9c.1.2.1.4 0 .6l-.5.6c-.1.2-.1.3 0 .5.3.6 1.2 1.5 1.9 1.9.2.1.3.1.5 0l.6-.5c.2-.1.4-.1.6 0l1.9.8c.3.1.3.3.3.5v.6c0 .3 0 .5-.5.7-1 .5-2.2.2-3.7-.9-1.6-1.2-2.8-2.8-3.2-3.9-.3-.8-.1-1.4.4-1.9Z"
+        fill="currentColor"
+      />
+    </svg>
+  );
+}
+
 function PhoneIcon() {
   return (
     <svg viewBox="0 0 24 24" className="h-4 w-4" aria-hidden="true">
@@ -37,9 +55,9 @@ function ArrowIcon() {
   );
 }
 
-function InstagramIcon() {
+function InstagramIcon({ className = "h-5 w-5" }: { className?: string }) {
   return (
-    <svg viewBox="0 0 24 24" className="h-5 w-5" aria-hidden="true">
+    <svg viewBox="0 0 24 24" className={className} aria-hidden="true">
       <rect x="4" y="4" width="16" height="16" rx="5" fill="none" stroke="currentColor" strokeWidth="1.8" />
       <circle cx="12" cy="12" r="3.6" fill="none" stroke="currentColor" strokeWidth="1.8" />
       <circle cx="16.8" cy="7.2" r="1.1" fill="currentColor" />
@@ -47,54 +65,123 @@ function InstagramIcon() {
   );
 }
 
-function FooterBanner() {
+function FooterAurora({ reduceMotion }: { reduceMotion: boolean }) {
+  if (reduceMotion) return null;
+
+  return (
+    <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden="true">
+      <span className="footer-aurora-orb footer-aurora-orb-a" />
+      <span className="footer-aurora-orb footer-aurora-orb-b" />
+      <span className="footer-aurora-orb footer-aurora-orb-c" />
+    </div>
+  );
+}
+
+function FooterBanner({ reduceMotion }: { reduceMotion: boolean }) {
   const { t } = useLanguage();
-  const reduceMotion = Boolean(useReducedMotion());
-  const bannerRef = useRef<HTMLDivElement>(null);
-  const isInView = useInView(bannerRef, { once: true, margin: "-8% 0px" });
-  const consultationHref = `${company.emailHref}?subject=${encodeURIComponent("Free Consultation Request")}`;
 
   return (
     <motion.div
-      ref={bannerRef}
-      className="relative overflow-hidden border border-primary/10 bg-brand-ink text-section shadow-[0_28px_80px_rgba(13,30,40,0.18)]"
+      className="footer-banner-shell relative text-section"
       initial={reduceMotion ? false : { opacity: 0, y: 28 }}
-      animate={isInView ? { opacity: 1, y: 0 } : undefined}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-8% 0px" }}
       transition={{ duration: 0.55, ease: "easeOut" }}
     >
+      <span className="footer-banner-ring" aria-hidden="true" />
       <div
-        className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_12%_30%,rgba(79,163,184,0.22),transparent_42%),radial-gradient(circle_at_88%_18%,rgba(26,107,124,0.18),transparent_36%)]"
+        className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_12%_30%,rgba(79,163,184,0.28),transparent_42%),radial-gradient(circle_at_88%_18%,rgba(26,107,124,0.22),transparent_36%)]"
         aria-hidden="true"
       />
-      <div className="pointer-events-none absolute -right-16 -top-16 h-48 w-48 rounded-full bg-accent/10 blur-3xl" aria-hidden="true" />
 
-      <div className="relative grid gap-6 px-6 py-8 md:grid-cols-[1.2fr_auto] md:items-center md:gap-8 md:px-8 md:py-10">
-        <div>
+      <div className="relative z-10 grid gap-6 px-6 py-8 md:grid-cols-[1.2fr_auto] md:items-center md:gap-8 md:px-8 md:py-10">
+        <motion.div
+          initial={reduceMotion ? false : { opacity: 0, x: -18 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true, margin: "-8% 0px" }}
+          transition={{ duration: 0.5, ease: "easeOut", delay: 0.08 }}
+        >
           <p className="label-text mb-3 text-section/55">{t.footer.bannerEyebrow}</p>
-          <h2 className="heading-section heading-section-on-dark max-w-xl">{t.footer.bannerTitle}</h2>
+          <h2 className="heading-section heading-section-on-dark max-w-xl bg-[linear-gradient(120deg,#fff_0%,#d4eef5_48%,#4fa3b8_100%)] bg-clip-text text-transparent">
+            {t.footer.bannerTitle}
+          </h2>
           <p className="mt-4 max-w-xl text-sm leading-7 text-section/72 md:text-[0.95rem]">{t.footer.bannerBody}</p>
-        </div>
+        </motion.div>
 
-        <div className="flex flex-col gap-3 sm:items-end">
-          <a href={consultationHref} className="footer-action-chip w-full justify-center sm:w-auto">
+        <motion.div
+          className="relative z-10 flex flex-col gap-3 sm:items-end"
+          initial={reduceMotion ? false : { opacity: 0, x: 18 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true, margin: "-8% 0px" }}
+          transition={{ duration: 0.5, ease: "easeOut", delay: 0.14 }}
+        >
+          <motion.a
+            href={company.consultationHref}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="footer-action-chip footer-action-chip-primary focus-ring w-full justify-center sm:w-auto"
+            whileHover={reduceMotion ? undefined : { scale: 1.02 }}
+            whileTap={reduceMotion ? undefined : { scale: 0.98 }}
+          >
             {t.footer.bannerCta}
             <ArrowIcon />
-          </a>
+          </motion.a>
           <div className="flex w-full flex-wrap gap-2 sm:justify-end">
-            <a href={company.phoneHref} className="footer-action-chip flex-1 justify-center sm:flex-none">
+            <motion.a
+              href={company.whatsappHref}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="footer-action-chip focus-ring flex-1 justify-center sm:flex-none"
+              whileHover={reduceMotion ? undefined : { scale: 1.02 }}
+              whileTap={reduceMotion ? undefined : { scale: 0.98 }}
+            >
+              <WhatsAppIcon />
+              {t.footer.whatsappUs}
+            </motion.a>
+            <motion.a
+              href={company.phoneHref}
+              className="footer-action-chip focus-ring flex-1 justify-center sm:flex-none"
+              whileHover={reduceMotion ? undefined : { scale: 1.02 }}
+              whileTap={reduceMotion ? undefined : { scale: 0.98 }}
+            >
               <PhoneIcon />
               {t.footer.callNow}
-            </a>
-            <a href={company.emailHref} className="footer-action-chip flex-1 justify-center sm:flex-none">
+            </motion.a>
+            <motion.a
+              href={socialLinks[0].href}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="footer-action-chip focus-ring flex-1 justify-center sm:flex-none"
+              whileHover={reduceMotion ? undefined : { scale: 1.02 }}
+              whileTap={reduceMotion ? undefined : { scale: 0.98 }}
+            >
+              <InstagramIcon />
+              {socialLinks[0].label}
+            </motion.a>
+            <motion.a
+              href={company.emailHref}
+              className="footer-action-chip focus-ring flex-1 justify-center sm:flex-none"
+              whileHover={reduceMotion ? undefined : { scale: 1.02 }}
+              whileTap={reduceMotion ? undefined : { scale: 0.98 }}
+            >
               <MailIcon />
               {t.footer.emailUs}
-            </a>
+            </motion.a>
           </div>
-        </div>
+        </motion.div>
       </div>
     </motion.div>
   );
 }
+
+const columnVariants = {
+  hidden: { opacity: 0, y: 22 },
+  visible: (index: number) => ({
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.48, ease: "easeOut" as const, delay: index * 0.08 },
+  }),
+};
 
 export function Footer() {
   const { t } = useLanguage();
@@ -109,40 +196,45 @@ export function Footer() {
   ];
 
   return (
-    <footer id="footer" ref={footerRef} className="bg-section px-6 pb-8 pt-12 text-primary md:pb-10 md:pt-16">
-      <div className="container">
-        <FooterBanner />
+    <footer id="footer" ref={footerRef} className="footer-shell px-6 pb-8 pt-0 md:pb-10">
+      <div className="footer-top-stripe" aria-hidden="true" />
+      <FooterAurora reduceMotion={reduceMotion} />
 
-        <motion.div
-          className="mt-10 grid gap-10 md:mt-12 md:grid-cols-[1.35fr_1fr_1fr]"
-          initial={reduceMotion ? false : { opacity: 0, y: 20 }}
-          animate={isInView ? { opacity: 1, y: 0 } : undefined}
-          transition={{ duration: 0.5, ease: "easeOut", delay: 0.08 }}
-        >
-          <div>
+      <div className="container relative pt-12 md:pt-16">
+        <FooterBanner reduceMotion={reduceMotion} />
+
+        <div className="relative z-10 mt-10 grid gap-10 md:mt-12 md:grid-cols-[1.35fr_1fr_1fr]">
+          <motion.div custom={0} variants={columnVariants} initial={reduceMotion ? false : "hidden"} animate={isInView ? "visible" : undefined}>
             <a href="/" className="inline-flex rounded-sm focus-ring" aria-label={`${company.legalName} home`}>
-              <Image src={company.logo} alt={company.legalName} width={134} height={73} className="h-14 w-auto" />
+              <Image src={company.logo} alt={company.legalName} width={134} height={73} className="h-14 w-auto brightness-0 invert" />
             </a>
-            <h2 className="heading-card-lg mt-6">{company.legalName}</h2>
-            <p className="mt-2 font-display text-base font-medium tracking-[-0.02em] text-primary/80">{company.name}</p>
-            <p className="text-body mt-4 max-w-sm">{t.footer.about}</p>
-          </div>
+            <h2 className="heading-card-lg mt-6 text-section">{company.legalName}</h2>
+            <p className="mt-2 font-display text-base font-medium tracking-[-0.02em] text-section/78">{company.name}</p>
+            <p className="mt-4 max-w-sm text-sm leading-7 text-section/68">{t.footer.about}</p>
+          </motion.div>
 
-          <div>
-            <p className="label-text mb-5">{t.footer.services}</p>
+          <motion.div custom={1} variants={columnVariants} initial={reduceMotion ? false : "hidden"} animate={isInView ? "visible" : undefined}>
+            <p className="label-text mb-5 text-section/55">{t.footer.services}</p>
             <nav className="grid gap-2" aria-label="Footer services">
-              {services.slice(0, 8).map((service) => (
-                <a key={service.href} href={service.href} className="footer-link-rich text-sm">
+              {services.slice(0, 8).map((service, index) => (
+                <motion.a
+                  key={service.href}
+                  href={service.href}
+                  className="footer-link-rich text-sm"
+                  initial={reduceMotion ? false : { opacity: 0, x: -10 }}
+                  animate={isInView ? { opacity: 1, x: 0 } : undefined}
+                  transition={{ duration: 0.35, delay: 0.12 + index * 0.03, ease: "easeOut" }}
+                >
                   {service.title}
                   <ArrowIcon />
-                </a>
+                </motion.a>
               ))}
             </nav>
-          </div>
+          </motion.div>
 
-          <div>
-            <p className="label-text mb-5">{t.footer.contact}</p>
-            <address className="text-muted grid gap-2.5 text-sm not-italic leading-7">
+          <motion.div custom={2} variants={columnVariants} initial={reduceMotion ? false : "hidden"} animate={isInView ? "visible" : undefined}>
+            <p className="label-text mb-5 text-section/55">{t.footer.contact}</p>
+            <address className="grid gap-2.5 text-sm not-italic leading-7 text-section/68">
               <a href={company.phoneHref} className="footer-link-rich">
                 {company.phone}
                 <ArrowIcon />
@@ -154,24 +246,40 @@ export function Footer() {
               <span>{company.location}</span>
               <span>{company.hours}</span>
             </address>
-            <nav className="mt-6 flex flex-wrap gap-3" aria-label="Social links">
-              {socialLinks.map((link) => (
+            <nav className="mt-6 flex flex-wrap gap-3" aria-label="Contact channels">
+              <a
+                href={company.whatsappHref}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="footer-social-btn focus-ring"
+                aria-label={t.footer.whatsappUs}
+              >
+                <WhatsAppIcon />
+              </a>
+              <a href={company.phoneHref} className="footer-social-btn focus-ring" aria-label={t.footer.callNow}>
+                <PhoneIcon />
+              </a>{socialLinks.map((link) => (
                 <a
                   key={link.href}
                   href={link.href}
-                  className="group inline-flex h-11 w-11 items-center justify-center rounded-full border border-primary/12 transition hover:-translate-y-0.5 hover:border-accent hover:bg-accent hover:text-section focus-ring"
+                  className="footer-social-btn focus-ring"
                   target="_blank"
-                  rel="noreferrer"
+                  rel="noopener noreferrer"
                   aria-label={link.label}
                 >
                   <InstagramIcon />
                 </a>
               ))}
             </nav>
-          </div>
-        </motion.div>
+          </motion.div>
+        </div>
 
-        <div className="text-muted mt-10 flex flex-col gap-4 border-t border-primary/10 pt-5 text-sm md:flex-row md:items-center md:justify-between">
+        <motion.div
+          className="relative z-10 mt-10 flex flex-col gap-4 border-t border-white/10 pt-5 text-sm text-section/62 md:flex-row md:items-center md:justify-between"
+          initial={reduceMotion ? false : { opacity: 0 }}
+          animate={isInView ? { opacity: 1 } : undefined}
+          transition={{ duration: 0.45, delay: 0.2, ease: "easeOut" }}
+        >
           <p>
             © 2026 {company.shortName}. {t.footer.rights}
           </p>
@@ -182,7 +290,7 @@ export function Footer() {
               </a>
             ))}
           </nav>
-        </div>
+        </motion.div>
       </div>
     </footer>
   );

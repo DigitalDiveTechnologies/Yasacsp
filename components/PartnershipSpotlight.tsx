@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { motion, useInView, useReducedMotion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { useLanguage } from "@/lib/i18n/LanguageProvider";
@@ -52,18 +52,14 @@ export function PartnershipSpotlight() {
   const { t } = useLanguage();
   const reduceMotion = Boolean(useReducedMotion());
   const sectionRef = useRef<HTMLElement>(null);
-  const videoViewportRef = useRef<HTMLDivElement>(null);
   const previewVideoRef = useRef<HTMLVideoElement>(null);
   const modalVideoRef = useRef<HTMLVideoElement>(null);
-  const isVideoInView = useInView(videoViewportRef, { amount: 0, margin: "120px 0px" });
   const sliderItems = [...partnershipSlides, ...partnershipSlides];
 
   const [activeIndex, setActiveIndex] = useState(0);
   const [isMuted, setIsMuted] = useState(true);
   const [lightbox, setLightbox] = useState<LightboxState>({ type: "closed" });
   const [mounted, setMounted] = useState(false);
-  const [videoFailed, setVideoFailed] = useState(false);
-  const [isPlaying, setIsPlaying] = useState(false);
   const rotateTimerRef = useRef<number | null>(null);
   const isMutedRef = useRef(isMuted);
 
@@ -92,19 +88,10 @@ export function PartnershipSpotlight() {
   }, [clearRotateTimer]);
 
   useEffect(() => {
-    setVideoFailed(false);
-    setIsPlaying(false);
-  }, [activeVideo.src]);
-
-  useEffect(() => {
     const video = previewVideoRef.current;
-    if (!video || reduceMotion || videoFailed) return;
-
-    video.muted = isMutedRef.current;
-
-    if (!isVideoInView || lightbox.type !== "closed") {
+    if (!video || lightbox.type !== "closed") {
       clearRotateTimer();
-      video.pause();
+      video?.pause();
       return;
     }
 
@@ -113,12 +100,8 @@ export function PartnershipSpotlight() {
     const tryPlay = () => {
       video.muted = isMutedRef.current;
       video.play()
-        .then(() => {
-          scheduleNextVideo();
-        })
-        .catch(() => {
-          scheduleNextVideo();
-        });
+        .then(() => scheduleNextVideo())
+        .catch(() => scheduleNextVideo());
     };
 
     if (video.readyState >= HTMLMediaElement.HAVE_FUTURE_DATA) {
@@ -128,15 +111,7 @@ export function PartnershipSpotlight() {
 
     video.addEventListener("canplay", tryPlay, { once: true });
     return () => video.removeEventListener("canplay", tryPlay);
-  }, [
-    activeVideo.src,
-    clearRotateTimer,
-    isVideoInView,
-    lightbox.type,
-    reduceMotion,
-    scheduleNextVideo,
-    videoFailed,
-  ]);
+  }, [activeVideo.src, clearRotateTimer, lightbox.type, scheduleNextVideo]);
 
   useEffect(() => {
     if (lightbox.type !== "video") return;
@@ -225,7 +200,6 @@ export function PartnershipSpotlight() {
                   key={partnershipVideos[lightbox.index].src}
                   className="max-h-[82vh] w-full rounded-sm bg-black object-contain shadow-[0_32px_90px_rgba(0,0,0,0.45)]"
                   src={partnershipVideos[lightbox.index].src}
-                  poster={partnershipVideos[lightbox.index].poster}
                   controls
                   playsInline
                   autoPlay
@@ -273,7 +247,7 @@ export function PartnershipSpotlight() {
               viewport={{ once: true, margin: "-10% 0px" }}
               transition={{ duration: 0.55, ease: "easeOut" }}
             >
-              <p className="label-text mb-2 text-section">{t.partnership.eyebrow}</p>
+              <p className="section-eyebrow mb-3 text-section">{t.partnership.eyebrow}</p>
               <div className="section-rule section-rule-spaced" />
               <h2 className="heading-section max-w-xl text-section">
                 {t.partnership.titleLine1}
@@ -301,75 +275,45 @@ export function PartnershipSpotlight() {
                 <div className="absolute -left-2 -top-2 z-10 h-12 w-12 border-l-2 border-t-2 border-accent sm:h-14 sm:w-14" aria-hidden="true" />
                 <div className="absolute -bottom-2 -right-2 z-10 h-12 w-12 border-b-2 border-r-2 border-accent sm:h-14 sm:w-14" aria-hidden="true" />
 
-                <div
-                  ref={videoViewportRef}
-                  className="relative aspect-video w-full overflow-hidden border border-section/12 bg-brand-ink/50 shadow-[0_32px_90px_rgba(0,0,0,0.42),0_0_48px_rgba(26,107,124,0.14)]"
-                >
-                  {reduceMotion || videoFailed ? (
-                    <Image
-                      src={activeVideo.poster}
-                      alt={t.partnership.imageAlt}
-                      fill
-                      sizes="(min-width: 1280px) 58vw, (min-width: 1024px) 55vw, 100vw"
-                      className="object-cover"
-                      unoptimized
-                      priority
-                    />
-                  ) : (
-                    <>
-                      <button
-                        type="button"
-                        onClick={openVideoLightbox}
-                        className="group absolute inset-0 z-10 cursor-pointer focus-ring"
-                        aria-label={t.partnership.viewFullVideo}
-                      >
-                        <span className="sr-only">{t.partnership.viewFullVideo}</span>
-                        <span className="pointer-events-none absolute inset-0 bg-brand-ink/0 transition group-hover:bg-brand-ink/18" />
-                        <span className="pointer-events-none absolute bottom-4 left-1/2 -translate-x-1/2 rounded-full border border-section/20 bg-brand-ink/75 px-4 py-2 text-[0.62rem] uppercase tracking-[0.14em] text-section opacity-0 backdrop-blur-sm transition group-hover:opacity-100">
-                          {t.partnership.viewFullVideo}
-                        </span>
-                      </button>
+                <div className="relative aspect-video w-full overflow-hidden border border-section/12 bg-brand-ink/50 shadow-[0_32px_90px_rgba(0,0,0,0.42),0_0_48px_rgba(26,107,124,0.14)]">
+                  <button
+                    type="button"
+                    onClick={openVideoLightbox}
+                    className="group absolute inset-0 z-10 cursor-pointer focus-ring"
+                    aria-label={t.partnership.viewFullVideo}
+                  >
+                    <span className="sr-only">{t.partnership.viewFullVideo}</span>
+                    <span className="pointer-events-none absolute inset-0 bg-brand-ink/0 transition group-hover:bg-brand-ink/18" />
+                    <span className="pointer-events-none absolute bottom-4 left-1/2 -translate-x-1/2 rounded-full border border-section/20 bg-brand-ink/75 px-4 py-2 text-[0.62rem] uppercase tracking-[0.14em] text-section opacity-0 backdrop-blur-sm transition group-hover:opacity-100">
+                      {t.partnership.viewFullVideo}
+                    </span>
+                  </button>
 
-                      <Image
-                        src={activeVideo.poster}
-                        alt=""
-                        fill
-                        sizes="(min-width: 1280px) 58vw, (min-width: 1024px) 55vw, 100vw"
-                        className={`object-cover transition-opacity duration-500 ${isPlaying ? "opacity-0" : "opacity-100"}`}
-                        unoptimized
-                        priority
-                        aria-hidden={isPlaying}
-                      />
+                  <video
+                    ref={previewVideoRef}
+                    key={activeVideo.src}
+                    className="absolute inset-0 h-full w-full object-cover"
+                    src={activeVideo.src}
+                    autoPlay
+                    muted
+                    playsInline
+                    preload="auto"
+                    aria-label={t.partnership.viewFullVideo}
+                  />
 
-                      <video
-                        ref={previewVideoRef}
-                        key={activeVideo.src}
-                        className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-500 ${isPlaying ? "opacity-100" : "opacity-0"}`}
-                        src={activeVideo.src}
-                        autoPlay
-                        muted
-                        playsInline
-                        preload="auto"
-                        aria-label={t.partnership.imageAlt}
-                        onPlaying={() => setIsPlaying(true)}
-                        onError={() => setVideoFailed(true)}
-                      />
+                  <button
+                    type="button"
+                    onClick={toggleSound}
+                    className="absolute right-3 top-3 z-20 inline-flex items-center gap-2 border border-section/20 bg-brand-ink/80 px-3 py-2 text-[0.58rem] uppercase tracking-[0.12em] text-section backdrop-blur-sm transition hover:border-accent focus-ring"
+                    aria-pressed={!isMuted}
+                    aria-label={isMuted ? t.partnership.unmute : t.partnership.mute}
+                  >
+                    <SoundIcon muted={isMuted} />
+                    {isMuted ? t.partnership.unmute : t.partnership.mute}
+                  </button>
 
-                      <button
-                        type="button"
-                        onClick={toggleSound}
-                        className="absolute right-3 top-3 z-20 inline-flex items-center gap-2 border border-section/20 bg-brand-ink/80 px-3 py-2 text-[0.58rem] uppercase tracking-[0.12em] text-section backdrop-blur-sm transition hover:border-accent focus-ring"
-                        aria-pressed={!isMuted}
-                        aria-label={isMuted ? t.partnership.unmute : t.partnership.mute}
-                      >
-                        <SoundIcon muted={isMuted} />
-                        {isMuted ? t.partnership.unmute : t.partnership.mute}
-                      </button>
-
-                      <div className="pointer-events-none absolute inset-y-0 left-0 w-16 bg-gradient-to-r from-brand-ink/35 to-transparent" />
-                      <div className="pointer-events-none absolute inset-y-0 right-0 w-16 bg-gradient-to-l from-brand-ink/35 to-transparent" />
-                    </>
-                  )}
+                  <div className="pointer-events-none absolute inset-y-0 left-0 w-16 bg-gradient-to-r from-brand-ink/35 to-transparent" />
+                  <div className="pointer-events-none absolute inset-y-0 right-0 w-16 bg-gradient-to-l from-brand-ink/35 to-transparent" />
                 </div>
               </div>
             </motion.div>

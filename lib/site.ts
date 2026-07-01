@@ -1,3 +1,6 @@
+const consultationMessage =
+  "Hi YASA, I would like to book a free consultation about setting up my company in the UAE.";
+
 export const company = {
   legalName: "YASA Project Management Services LLC",
   name: "YASA Corporate Service Provider",
@@ -5,8 +8,12 @@ export const company = {
   logo: "/yasa-logo.png",
   phone: "+971 50 7778009",
   phoneHref: "tel:+971507778009",
-  email: "contact@yasacsp.com",
-  emailHref: "mailto:contact@yasacsp.com",
+  whatsappHref:
+    "https://wa.me/971507778009?text=Hi%20YASA%2C%20I%27d%20like%20advice%20on%20which%20UAE%20jurisdiction%20suits%20my%20business.",
+  consultationHref: `https://wa.me/971507778009?text=${encodeURIComponent(consultationMessage)}`,
+  consultationMailHref: `mailto:info@yasacsp.com?subject=${encodeURIComponent("Free Consultation Request")}&body=${encodeURIComponent(consultationMessage)}`,
+  email: "info@yasacsp.com",
+  emailHref: "mailto:info@yasacsp.com",
   location: "Office 901-B68, Iris Bay Tower, Business Bay, Dubai, UAE",
   hours: "Mon - Sat, 9:00 AM - 6:00 PM",
 };

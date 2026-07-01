@@ -34,7 +34,7 @@ export function ServicesSection() {
     <section
       ref={sectionRef}
       id="services"
-      className="section-block relative overflow-hidden border-t border-primary/12 bg-section text-primary"
+      className="section-block relative overflow-hidden border-t border-primary/12 bg-section-bg text-primary"
     >
       <div
         className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_18%,rgba(26,107,124,0.08),transparent_42%)]"
@@ -42,15 +42,13 @@ export function ServicesSection() {
       />
 
       <div className="container relative">
-        <div className="section-header grid gap-4 lg:grid-cols-[0.8fr_1.2fr] lg:items-end">
-          <div>
-            <p className="label-text mb-2">{t.services.eyebrow}</p>
-            <div className="section-rule section-rule-spaced" />
-            <h2 className="heading-section">
-              {t.services.title}
-            </h2>
+        <div className="section-header">
+          <p className="section-eyebrow section-header-intro">{t.services.eyebrow}</p>
+          <div className="section-rule section-rule-spaced" />
+          <div className="section-header-split">
+            <h2 className="heading-section text-balance">{t.services.title}</h2>
+            <p className="text-lead max-w-none">{t.services.body}</p>
           </div>
-          <p className="text-lead lg:justify-self-end">{t.services.body}</p>
         </div>
 
         <motion.div
@@ -78,12 +76,12 @@ export function ServicesSection() {
               </>
             ) : null}
 
-            <div className="absolute left-0 top-0 z-10 border border-primary/12 bg-white/92 px-4 py-3 shadow-soft backdrop-blur-sm">
+            <div className="services-wheel-chip absolute left-0 top-0 z-10 border border-primary/12 bg-section-bg/92 px-4 py-3 shadow-soft backdrop-blur-sm">
               <p className="label-text">{t.services.serviceCount}</p>
             </div>
 
             <motion.div
-              className="relative z-10 w-full max-w-3xl border border-primary/10 bg-white p-4 shadow-soft sm:p-6 md:max-w-4xl md:p-8"
+              className="relative z-10 w-full max-w-3xl border border-primary/10 bg-section-bg p-4 shadow-soft sm:p-6 md:max-w-4xl md:p-8"
               whileHover={reduceMotion ? undefined : { scale: 1.012 }}
               transition={{ duration: 0.35, ease: "easeOut" }}
             >
@@ -97,8 +95,8 @@ export function ServicesSection() {
               />
             </motion.div>
 
-            <div className="absolute bottom-0 right-0 z-10 hidden border border-primary/12 bg-primary px-4 py-3 text-section shadow-soft sm:block">
-              <p className="font-mono text-[0.62rem] uppercase tracking-[0.16em] text-section/55">{t.services.featured}</p>
+            <div className="services-wheel-chip absolute bottom-0 right-0 z-10 hidden border border-primary/12 bg-brand-ink px-4 py-3 text-section shadow-soft sm:block">
+              <p className="services-wheel-chip-muted font-mono text-[0.62rem] uppercase tracking-[0.16em]">{t.services.featured}</p>
               <AnimatePresence mode="wait">
                 <motion.p
                   key={activeService}
@@ -154,7 +152,7 @@ export function ServicesSection() {
                   className={`group flex w-full items-start gap-3 border px-4 py-3 text-left transition focus-ring ${
                     isActive
                       ? "border-accent bg-accent/10 shadow-[0_12px_32px_rgba(26,107,124,0.12)]"
-                      : "border-primary/10 bg-surface hover:border-accent/35 hover:bg-white"
+                      : "border-primary/10 bg-surface hover:border-accent/35 hover:bg-section-bg"
                   }`}
                 >
                   <span className="label-text mt-0.5">

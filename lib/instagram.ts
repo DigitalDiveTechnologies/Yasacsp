@@ -91,19 +91,3 @@ export const mediaLinks: MediaLink[] = [
     image: "/images/instagram/post-6.jpg",
   },
 ];
-
-export const instagramImages = [
-  "/images/instagram/post-1.jpg",
-  "/images/instagram/post-2.jpg",
-  "/images/instagram/post-3.jpg",
-  "/images/instagram/post-4.jpg",
-  "/images/instagram/post-5.jpg",
-  "/images/instagram/post-6.jpg",
-  "/images/instagram/post-7.jpg",
-  "/images/instagram/post-8.jpg",
-  "/images/instagram/post-9.jpg",
-  "/images/instagram/post-10.jpg",
-  "/images/instagram/post-11.jpg",
-  "/images/instagram/post-12.jpg",
-  "/images/instagram/post-13.jpg",
-] as const;
